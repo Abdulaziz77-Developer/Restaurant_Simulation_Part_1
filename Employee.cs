@@ -17,6 +17,7 @@ namespace Restaurant_Simulation_Part_1
             if (item is EggOrder)
             {
                 item = new EggOrder(quantity);
+                int number = 9;
                 return eggOrder;
             }
                 chickenOrder = new ChickenOrder(quantity);
