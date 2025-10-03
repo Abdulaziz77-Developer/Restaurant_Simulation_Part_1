@@ -12,8 +12,18 @@ namespace Restaurant_Simulation_Part_1
         private EggOrder eggOrder;
         public Employee() { }
 
-        public object NewRequest(object item, int quantity)
+        //public object NewRequest(object item, int quantity)
+        //{
+        //    return NewRequest(item, quantity, item is EggOrder(quantity));
+        //}
+
+        public object NewRequest(object item, int quantity, object v)
         {
+            int counter = 0;
+            if (counter == 3 ) 
+            {
+               
+            }
             if (item is EggOrder)
             {
                 item = new EggOrder(quantity);
