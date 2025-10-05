@@ -30,32 +30,54 @@
         {
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             groupBox1 = new GroupBox();
+            rbtnEgg = new RadioButton();
+            rbtnChicken = new RadioButton();
             label1 = new Label();
-            textBox1 = new TextBox();
-            button1 = new Button();
-            button2 = new Button();
+            txtQuantity = new TextBox();
+            btnNewRequest = new Button();
+            copyRequest = new Button();
             label2 = new Label();
-            label3 = new Label();
-            button3 = new Button();
+            countEggQuality = new Label();
+            btnPrepareFood = new Button();
             label4 = new Label();
-            textBox2 = new TextBox();
-            radioButton1 = new RadioButton();
-            radioButton2 = new RadioButton();
+            txtResult = new TextBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(radioButton2);
-            groupBox1.Controls.Add(radioButton1);
+            groupBox1.Controls.Add(rbtnEgg);
+            groupBox1.Controls.Add(rbtnChicken);
             groupBox1.Location = new Point(45, 14);
-            groupBox1.Margin = new Padding(5, 5, 5, 5);
+            groupBox1.Margin = new Padding(5);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(5, 5, 5, 5);
+            groupBox1.Padding = new Padding(5);
             groupBox1.Size = new Size(289, 150);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Mune";
+            // 
+            // rbtnEgg
+            // 
+            rbtnEgg.AutoSize = true;
+            rbtnEgg.Location = new Point(20, 92);
+            rbtnEgg.Name = "rbtnEgg";
+            rbtnEgg.Size = new Size(75, 35);
+            rbtnEgg.TabIndex = 1;
+            rbtnEgg.TabStop = true;
+            rbtnEgg.Text = "Egg";
+            rbtnEgg.UseVisualStyleBackColor = true;
+            // 
+            // rbtnChicken
+            // 
+            rbtnChicken.AutoSize = true;
+            rbtnChicken.Location = new Point(20, 51);
+            rbtnChicken.Name = "rbtnChicken";
+            rbtnChicken.Size = new Size(120, 35);
+            rbtnChicken.TabIndex = 0;
+            rbtnChicken.TabStop = true;
+            rbtnChicken.Text = "Chicken";
+            rbtnChicken.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -66,30 +88,32 @@
             label1.TabIndex = 0;
             label1.Text = "Quantity";
             // 
-            // textBox1
+            // txtQuantity
             // 
-            textBox1.Location = new Point(159, 186);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(175, 38);
-            textBox1.TabIndex = 1;
+            txtQuantity.Location = new Point(159, 186);
+            txtQuantity.Name = "txtQuantity";
+            txtQuantity.Size = new Size(175, 38);
+            txtQuantity.TabIndex = 1;
             // 
-            // button1
+            // btnNewRequest
             // 
-            button1.Location = new Point(351, 186);
-            button1.Name = "button1";
-            button1.Size = new Size(274, 38);
-            button1.TabIndex = 2;
-            button1.Text = "Submit  new request";
-            button1.UseVisualStyleBackColor = true;
+            btnNewRequest.Location = new Point(351, 186);
+            btnNewRequest.Name = "btnNewRequest";
+            btnNewRequest.Size = new Size(274, 38);
+            btnNewRequest.TabIndex = 2;
+            btnNewRequest.Text = "Submit  new request";
+            btnNewRequest.UseVisualStyleBackColor = true;
+            btnNewRequest.Click += btnNewRequest_Click;
             // 
-            // button2
+            // copyRequest
             // 
-            button2.Location = new Point(45, 252);
-            button2.Name = "button2";
-            button2.Size = new Size(362, 38);
-            button2.TabIndex = 3;
-            button2.Text = "Copy with previous request ";
-            button2.UseVisualStyleBackColor = true;
+            copyRequest.Location = new Point(45, 252);
+            copyRequest.Name = "copyRequest";
+            copyRequest.Size = new Size(362, 38);
+            copyRequest.TabIndex = 3;
+            copyRequest.Text = "Copy with previous request ";
+            copyRequest.UseVisualStyleBackColor = true;
+            copyRequest.Click += copyRequest_Click;
             // 
             // label2
             // 
@@ -100,23 +124,24 @@
             label2.TabIndex = 4;
             label2.Text = "Egg Quality : ";
             // 
-            // label3
+            // countEggQuality
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(207, 316);
-            label3.Name = "label3";
-            label3.Size = new Size(27, 31);
-            label3.TabIndex = 5;
-            label3.Text = "0";
+            countEggQuality.AutoSize = true;
+            countEggQuality.Location = new Point(207, 316);
+            countEggQuality.Name = "countEggQuality";
+            countEggQuality.Size = new Size(27, 31);
+            countEggQuality.TabIndex = 5;
+            countEggQuality.Text = "0";
             // 
-            // button3
+            // btnPrepareFood
             // 
-            button3.Location = new Point(45, 371);
-            button3.Name = "button3";
-            button3.Size = new Size(440, 38);
-            button3.TabIndex = 6;
-            button3.Text = "Prepare Food";
-            button3.UseVisualStyleBackColor = true;
+            btnPrepareFood.Location = new Point(45, 371);
+            btnPrepareFood.Name = "btnPrepareFood";
+            btnPrepareFood.Size = new Size(440, 38);
+            btnPrepareFood.TabIndex = 6;
+            btnPrepareFood.Text = "Prepare Food";
+            btnPrepareFood.UseVisualStyleBackColor = true;
+            btnPrepareFood.Click += btnPrepareFood_Click;
             // 
             // label4
             // 
@@ -127,53 +152,31 @@
             label4.TabIndex = 7;
             label4.Text = "Results";
             // 
-            // textBox2
+            // txtResult
             // 
-            textBox2.Location = new Point(45, 462);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(448, 150);
-            textBox2.TabIndex = 8;
-            // 
-            // radioButton1
-            // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(20, 51);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(120, 35);
-            radioButton1.TabIndex = 0;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Chicken";
-            radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(20, 92);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(75, 35);
-            radioButton2.TabIndex = 1;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Egg";
-            radioButton2.UseVisualStyleBackColor = true;
+            txtResult.Location = new Point(45, 462);
+            txtResult.Multiline = true;
+            txtResult.Name = "txtResult";
+            txtResult.Size = new Size(448, 150);
+            txtResult.TabIndex = 8;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(14F, 31F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(659, 653);
-            Controls.Add(textBox2);
+            Controls.Add(txtResult);
             Controls.Add(label4);
-            Controls.Add(button3);
-            Controls.Add(label3);
+            Controls.Add(btnPrepareFood);
+            Controls.Add(countEggQuality);
             Controls.Add(label2);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(textBox1);
+            Controls.Add(copyRequest);
+            Controls.Add(btnNewRequest);
+            Controls.Add(txtQuantity);
             Controls.Add(label1);
             Controls.Add(groupBox1);
             Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            Margin = new Padding(5, 5, 5, 5);
+            Margin = new Padding(5);
             Name = "Form1";
             Text = "Restaurant";
             groupBox1.ResumeLayout(false);
@@ -187,15 +190,15 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private GroupBox groupBox1;
         private Label label1;
-        private TextBox textBox1;
-        private Button button1;
-        private Button button2;
+        private TextBox txtQuantity;
+        private Button btnNewRequest;
+        private Button copyRequest;
         private Label label2;
-        private Label label3;
-        private RadioButton radioButton2;
-        private RadioButton radioButton1;
-        private Button button3;
+        private Label countEggQuality;
+        private RadioButton rbtnEgg;
+        private RadioButton rbtnChicken;
+        private Button btnPrepareFood;
         private Label label4;
-        private TextBox textBox2;
+        private TextBox txtResult;
     }
 }

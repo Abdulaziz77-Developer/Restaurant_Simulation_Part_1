@@ -8,34 +8,40 @@ namespace Restaurant_Simulation_Part_1
 {
     public class EggOrder
     {
-        private int quantity;
-        bool isQuality = false;
+         int quantity;
+        bool isQuality = true;
         private Random rand = new();
+        bool isCrack;
+        int numberQuality = 0;
         public EggOrder(int quantity)
         {
             this.quantity = quantity;
         }
-        public int? GetQuality()
+        public int GetQuantity()
+        {
+            return this.quantity;
+        }
+        public int? GetQuanlity()
         {
             if (!isQuality)
             {
                 return null;
             }
-            return  rand.Next(1, 100);
+            numberQuality = rand.Next(1, 100);
+            return numberQuality;
         }
         public void Crack()
         {
-            try
+            if (this.numberQuality <= 25)
             {
-                bool isCarsck = GetQuality() < 25;
+                throw new InvalidOperationException("Число не должно быть не меньше 25 ");
+                
             }
-            catch (Exception)
+            else
             {
 
-                throw new ArgumentNullException("This is is not cracked");
             }
         }
-
         public void DiscarsShell()
         {
 
@@ -43,5 +49,6 @@ namespace Restaurant_Simulation_Part_1
         public void Cook()
         {
         }
+       
     }
 }

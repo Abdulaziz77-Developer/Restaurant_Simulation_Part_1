@@ -10,53 +10,224 @@ namespace Restaurant_Simulation_Part_1
     {
         private ChickenOrder chickenOrder;
         private EggOrder eggOrder;
-        public Employee() { }
-
+        private object? myObject;
+        private string text = string.Empty;
+        int counter = 1;
+        int wrongNumber = 3;
+        private bool isPrepared = false;
+        public Employee()
+        {
+            
+        }
+        #region
         //public object NewRequest(object item, int quantity)
         //{
         //    return NewRequest(item, quantity, item is EggOrder(quantity));
         //}
+        #endregion
+        #region This is bad method to create NewRequest 
+        //public object NewRequest(object item, int quantity)
+        //{
 
-        public object NewRequest(object item, int quantity, object v)
+        //    while (counter > 0)
+        //    {
+        //        if (wrongNumber == counter)
+        //        {
+        //            if (item is EggOrder)
+        //            {
+        //                item = new ChickenOrder(quantity);
+        //                chickenOrder = (ChickenOrder)item;
+        //                counter++;
+        //                wrongNumber += 3;
+        //                return item;
+        //            }
+        //            else
+        //            {
+        //                item = new EggOrder(quantity);
+        //                eggOrder = (EggOrder)item;
+        //                counter++;
+        //                wrongNumber += 3;
+        //                return item;
+        //            }
+        //        }
+        //        else if (item is EggOrder)
+        //        {
+        //            item = new EggOrder(quantity);
+        //            eggOrder = (EggOrder)item;
+        //            counter++;
+        //            return item;
+        //        }
+        //        else
+        //        {
+        //            item = new ChickenOrder(quantity);
+        //            chickenOrder = (ChickenOrder)item;
+        //            counter++;
+        //            return item;
+
+        //        }
+
+        //    }
+        //    return item;
+
+        //}
+        #endregion
+
+        #region
+        //public EggOrder? NewRequest(EggOrder egg , int quantity)
+        //{
+        //    egg = new EggOrder(quantity);
+        //    eggOrder = egg;
+        //    return egg;
+        //}
+        #endregion
+        public object NewRequest( int number,int quantity)
         {
-            int counter = 0;
-            if (counter == 3 ) 
+            if (number != 1 && number != 2 )
             {
-               
+                throw new InvalidOperationException("Нет заказа для приготовления");
             }
-            if (item is EggOrder)
+            isPrepared = false;
+            if (number == 1)
             {
-                item = new EggOrder(quantity);
-                int number = 9;
-                return eggOrder;
+                var chicken = new ChickenOrder(quantity);
+                chickenOrder = chicken;
+                return chicken;
             }
-                chickenOrder = new ChickenOrder(quantity);
-                return chickenOrder;
+            else
+            {
+                var egg = new EggOrder(quantity);
+                eggOrder = egg;
+                return egg;
+            }
+            
         }
-        public object CopyRequest()
+        public object? CopyRequest()
         {
-            if (chickenOrder != null)
+            if (chickenOrder is not null && eggOrder is null)
             {
-                return chickenOrder;
+                ChickenOrder chicken = new(chickenOrder.GetQuantity());
+                return chicken;
             }
-            return eggOrder;
+            else if(chickenOrder is null && eggOrder is not null)
+            {
+                EggOrder _eggOrder = new(eggOrder.GetQuantity());
+                return _eggOrder;
+            }
+
+            else if(chickenOrder is null && eggOrder is null)
+            {
+                throw new InvalidOperationException("Нельзя скопировать: сотрудник ещё не получил ни одного запроса.");
+            }
+           
         }
-        public string Inspect(object item )
+        public string Inspect(object item)
         {
-            if (item is EggOrder)
+            if (item is ChickenOrder chicken)
             {
-                return "Egg is cooking ";
+                text = $"Кол-во куриц: {chicken.GetQuantity()}";
             }
-            return "Chicekn is cookinig";
+            else if (item is EggOrder egg)
+            {
+                text = $"Кол-во яиц: {egg.GetQuantity()}";
+            }
+            else
+            {
+                text = "Неизвестный заказ";
+            }
+
+            return text;
         }
 
         public string PrepareFood(object item)
         {
-            if (item is EggOrder)
+            isPrepared = true;
+            string text = "";
+            
+            #region Test Exception
+            //try
+            //{
+
+            //        if (item is ChickenOrder)
+            //        {
+            //            for (int i = 0; i < ((ChickenOrder)item).GetQuantity(); i++)
+            //            {
+            //                ((ChickenOrder)item).Cutup();
+            //            }
+            //            ((ChickenOrder)item).Cook();
+            //            text = "The chicken is ripe ";
+            //        }
+            //        var num = ((EggOrder)item).GetQuanlity();
+            //        if (num > 25)
+            //        {
+            //            text = $"Тухлый {num}";
+            //            if (item is EggOrder)
+            //            {
+            //                for (int i = 0; i < ((EggOrder)item).GetQuantity(); i++)
+            //                {
+            //                    ((EggOrder)item).Crack();
+            //                    ((EggOrder)item).DiscarsShell();
+            //                }
+            //           ((EggOrder)item).Cook();
+
+            //            }
+            //        }
+            //        else
+            //        {
+            //            text = $"Не Тухлый {num}";
+            //        }                   
+
+            //    return text;
+            //}
+            //catch (Exception)
+            //{
+
+            //    throw new Exception("once the food is prepared, the employee cannot be prepare it again");
+            //}
+            #endregion
+            try
             {
-                return "The egg is ripe";
+                if (counter != 2)
+                {
+                    if (item is ChickenOrder chicken)
+                    {
+                        for (int i = 0; i < chicken.GetQuantity(); i++)
+                        {
+                            chicken.Cutup();
+                        }
+                        chicken.Cook();
+                        text = "The chicken is ripe ";
+                    }
+                    else if (item is EggOrder egg)
+                    {
+                        
+                            text = $"Тухлый {egg.GetQuanlity()}";
+                            for (int i = 0; i < egg.GetQuantity(); i++)
+                            {
+                                egg.Crack();
+                                egg.DiscarsShell();
+                            }
+                            egg.Cook();
+                        
+                        //else
+                        //{
+                        //    text = $"Не Тухлый {num}";
+                        //}
+                    }
+                    else
+                    {
+                        throw new InvalidCastException("Неизвестный тип заказа — сотрудник не знает, как его готовить.");
+                    }
+                }
+
+                return text;
             }
-            return "The chicken is ripe ";
+            catch (InvalidCastException ex)
+            {
+                throw new InvalidOperationException("Сотрудник получил неподдерживаемый заказ.", ex);
+            }
+
         }
+
     }
 }
+
