@@ -27,8 +27,8 @@ namespace Restaurant_Simulation_Part_1
             {
                 return null;
             }
-            numberQuality = rand.Next(1, 100);
-            return numberQuality;
+            this.numberQuality = rand.Next(1, 100);
+            return this.numberQuality;
         }
         public void Crack()
         {

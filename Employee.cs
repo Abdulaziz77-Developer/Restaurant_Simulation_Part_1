@@ -80,17 +80,17 @@ namespace Restaurant_Simulation_Part_1
         //    return egg;
         //}
         #endregion
-        public object NewRequest( int number,int quantity)
+        public object NewRequest( object item,int quantity)
         {
-            if (number != 1 && number != 2 )
+            if (item is null)
             {
                 throw new InvalidOperationException("Нет заказа для приготовления");
             }
             isPrepared = false;
-            if (number == 1)
+            if (item is ChickenOrder)
             {
                 var chicken = new ChickenOrder(quantity);
-                chickenOrder = chicken;
+                this.chickenOrder = chicken;
                 return chicken;
             }
             else
@@ -103,22 +103,26 @@ namespace Restaurant_Simulation_Part_1
         }
         public object? CopyRequest()
         {
-            if (chickenOrder is not null && eggOrder is null)
+            if (this.chickenOrder is not null && this.eggOrder is null)
             {
-                ChickenOrder chicken = new(chickenOrder.GetQuantity());
+                ChickenOrder chicken = new(this.chickenOrder.GetQuantity());
                 return chicken;
             }
-            else if(chickenOrder is null && eggOrder is not null)
+            else if(this.chickenOrder is null && this.eggOrder is not null)
             {
-                EggOrder _eggOrder = new(eggOrder.GetQuantity());
+                EggOrder _eggOrder = new(this.eggOrder.GetQuantity());
                 return _eggOrder;
             }
 
-            else if(chickenOrder is null && eggOrder is null)
+            else if(this.chickenOrder is null && this.eggOrder is null)
             {
                 throw new InvalidOperationException("Нельзя скопировать: сотрудник ещё не получил ни одного запроса.");
             }
-           
+            else
+            {
+                throw new InvalidOperationException("Нельзя скопировать: сотрудник ещё не получил ни одного запроса.");
+            }
+            
         }
         public string Inspect(object item)
         {
