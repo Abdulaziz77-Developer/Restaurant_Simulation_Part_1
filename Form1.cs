@@ -4,6 +4,8 @@ namespace Restaurant_Simulation_Part_1
 {
     public partial class Form1 : Form
     {
+        bool _isEgg;
+        bool _IsChikken;
         bool isChicken;
         bool isEgg;
         private EggOrder egg;
@@ -16,6 +18,7 @@ namespace Restaurant_Simulation_Part_1
         public Form1()
         {
             InitializeComponent();
+            txtQuantity.Text = "0";
 
         }
 
@@ -83,46 +86,59 @@ namespace Restaurant_Simulation_Part_1
             this.isChicken = rbtnChicken.Checked;
             this.isEgg = rbtnEgg.Checked;
             bool isErrorRequest = random.Next(0, 3) == 0;
-            countItem = int.Parse(txtQuantity.Text);
+
+            //MessageBox.Show(countItem.ToString());
             try
             {
+                if (string.IsNullOrEmpty(nameof(txtQuantity.Text)) || txtQuantity.Text == "0")
+                {
+                    throw new InvalidOperationException(" оличество не можеть быть равень нулю ");
+                }
+                countItem = int.Parse(txtQuantity.Text);
+                if (countItem < 0 || countItem == 0)
+                {
+                    throw new Exception(" оличество не можеть быть меньше с нулю ");
+                }
+
                 if (isErrorRequest)
                 {
                     if (this.isChicken)
                     {
-                        egg = new EggOrder(countItem);
-                        var item = employee.NewRequest(egg, countItem);
-                        txtResult.Text += Environment.NewLine + employee.Inspect(item);
+                        this.egg = new EggOrder(countItem);
+                        var item = employee.NewRequest(this.egg, countItem);
+                        txtResult.Text += employee.Inspect(item) + Environment.NewLine;
                         txtQuantity.Text += egg.GetQuanlity();
                     }
                     if (this.isEgg)
                     {
-                        chicken = new ChickenOrder(countItem);
-                        var item =  employee.NewRequest(chicken, countItem);
-                        txtResult.Text += Environment.NewLine + employee.Inspect(item);
-                       
+                        this.chicken = new ChickenOrder(countItem);
+                        var item = employee.NewRequest(this.chicken, countItem);
+                        txtResult.Text += employee.Inspect(item) + Environment.NewLine;
+
                     }
                 }
                 else
                 {
                     if (this.isChicken)
                     {
-                        chicken = new ChickenOrder(countItem);
-                        employee.NewRequest(chicken, countItem);
+                        var objChicken = new ChickenOrder(countItem);
+                       this.chicken = ((ChickenOrder)employee.NewRequest(objChicken, countItem));
                         txtResult.Text += employee.Inspect(chicken) + Environment.NewLine;
                     }
                     else
                     {
-                        egg = new EggOrder(countItem);
-                        employee.NewRequest(egg, countItem);
-                        txtResult.Text +=  employee.Inspect(egg) + Environment.NewLine;
+                        var objEgg = new EggOrder(countItem);
+                        this.egg = ((EggOrder)employee.NewRequest(objEgg, countItem));
+                        txtResult.Text += employee.Inspect(egg) + Environment.NewLine;
+                        countEggQuality.Text = egg.GetQuanlity().ToString();
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);                
+                MessageBox.Show(ex.Message);
             }
+            txtQuantity.Text = "0";
         }
 
         private void copyRequest_Click(object sender, EventArgs e)
@@ -131,19 +147,19 @@ namespace Restaurant_Simulation_Part_1
             {
 
                 var item = employee.CopyRequest();
-                if (isEgg && item != null)
+                if (this.isEgg && item != null)
                 {
                     txtQuantity.Text = $"{((EggOrder)item).GetQuantity()}";
-                    txtResult.Text += Environment.NewLine + $"{employee.Inspect((EggOrder)item)}";
+                    txtResult.Text += $"{employee.Inspect((EggOrder)item)}" + Environment.NewLine;
                     countEggQuality.Text = $"{((EggOrder)item).GetQuanlity()}";
                 }
-                if (isChicken && item != null)
+                if (this.isChicken && item != null)
                 {
                     txtQuantity.Text = $"{((ChickenOrder)item).GetQuantity()}";
-                    txtResult.Text += $"{employee.Inspect((ChickenOrder)item)}";
+                    txtResult.Text += $"{employee.Inspect((ChickenOrder)item)}" + Environment.NewLine;
                 }
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
 
                 MessageBox.Show(ex.Message);
@@ -155,17 +171,17 @@ namespace Restaurant_Simulation_Part_1
 
             try
             {
-                if (isChicken)
+                if (this.isChicken)
                 {
                     string text = txtResult.Text;
-                    var res = employee.PrepareFood(chicken);
+                    var res = employee.PrepareFood(this.chicken);
                     MessageBox.Show(res);
                     txtQuantity.Text = "0";
 
                 }
-                if (isEgg)
+                else if (this.isEgg)
                 {
-                    var result = employee.PrepareFood(egg);
+                    var result = employee.PrepareFood(this.egg);
                     txtQuantity.Text = "0";
                     MessageBox.Show(result);
                 }
@@ -173,8 +189,17 @@ namespace Restaurant_Simulation_Part_1
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-               
+
             }
+        }
+        private void txtQuantity_Click(object sender, EventArgs e)
+        {
+            txtQuantity.Text = "";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

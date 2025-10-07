@@ -14,7 +14,7 @@ namespace Restaurant_Simulation_Part_1
         private string text = string.Empty;
         int counter = 1;
         int wrongNumber = 3;
-        private bool isPrepared = false;
+        private bool isPrepared = true;
         public Employee()
         {
             
@@ -82,11 +82,12 @@ namespace Restaurant_Simulation_Part_1
         #endregion
         public object NewRequest( object item,int quantity)
         {
+            this.isPrepared = false;
             if (item is null)
             {
                 throw new InvalidOperationException("Нет заказа для приготовления");
             }
-            isPrepared = false;
+           
             if (item is ChickenOrder)
             {
                 var chicken = new ChickenOrder(quantity);
@@ -96,19 +97,20 @@ namespace Restaurant_Simulation_Part_1
             else
             {
                 var egg = new EggOrder(quantity);
-                eggOrder = egg;
+                this.eggOrder = egg;
                 return egg;
             }
-            
+           
         }
         public object? CopyRequest()
         {
-            if (this.chickenOrder is not null && this.eggOrder is null)
+            this.isPrepared = false;
+            if (this.chickenOrder is not null)
             {
                 ChickenOrder chicken = new(this.chickenOrder.GetQuantity());
                 return chicken;
             }
-            else if(this.chickenOrder is null && this.eggOrder is not null)
+            else if(this.eggOrder is not null)
             {
                 EggOrder _eggOrder = new(this.eggOrder.GetQuantity());
                 return _eggOrder;
@@ -144,7 +146,7 @@ namespace Restaurant_Simulation_Part_1
 
         public string PrepareFood(object item)
         {
-            isPrepared = true;
+          
             string text = "";
             
             #region Test Exception
@@ -190,42 +192,54 @@ namespace Restaurant_Simulation_Part_1
             #endregion
             try
             {
-                if (counter != 2)
+
+                //if (counter != 2)
+                //{
+                if (!this.isPrepared)
                 {
-                    if (item is ChickenOrder chicken)
+                    if (item is ChickenOrder)
                     {
-                        for (int i = 0; i < chicken.GetQuantity(); i++)
+                        for (int i = 0; i < chickenOrder.GetQuantity(); i++)
                         {
-                            chicken.Cutup();
+                            chickenOrder.Cutup();
                         }
-                        chicken.Cook();
+                        chickenOrder.Cook();
                         text = "The chicken is ripe ";
                     }
-                    else if (item is EggOrder egg)
+                    else if (item is EggOrder)
                     {
-                        
-                            text = $"Тухлый {egg.GetQuanlity()}";
-                            for (int i = 0; i < egg.GetQuantity(); i++)
-                            {
-                                egg.Crack();
-                                egg.DiscarsShell();
-                            }
-                            egg.Cook();
-                        
+
+                        text = $"Тухлый {eggOrder.GetQuanlity()}";
+                        for (int i = 0; i < eggOrder.GetQuantity(); i++)
+                        {
+                            eggOrder.Crack();
+                            eggOrder.DiscarsShell();
+                        }
+                        eggOrder.Cook();
+
                         //else
                         //{
                         //    text = $"Не Тухлый {num}";
                         //}
                     }
+
                     else
                     {
                         throw new InvalidCastException("Неизвестный тип заказа — сотрудник не знает, как его готовить.");
                     }
+                    this.isPrepared = true;
+
                 }
+                else
+                {
+                    throw new InvalidOperationException("«уже приготовил, больше не может приготовить снова");
+                }
+              
+                //}
 
                 return text;
             }
-            catch (InvalidCastException ex)
+            catch (InvalidCastException ex) 
             {
                 throw new InvalidOperationException("Сотрудник получил неподдерживаемый заказ.", ex);
             }

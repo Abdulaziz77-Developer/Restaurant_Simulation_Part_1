@@ -94,6 +94,8 @@
             txtQuantity.Name = "txtQuantity";
             txtQuantity.Size = new Size(175, 38);
             txtQuantity.TabIndex = 1;
+            txtQuantity.Click += txtQuantity_Click;
+            
             // 
             // btnNewRequest
             // 
@@ -179,6 +181,7 @@
             Margin = new Padding(5);
             Name = "Form1";
             Text = "Restaurant";
+            Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);

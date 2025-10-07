@@ -8,7 +8,7 @@ namespace Restaurant_Simulation_Part_1
 {
     public class EggOrder
     {
-         int quantity;
+        int quantity;
         bool isQuality = true;
         private Random rand = new();
         bool isCrack;
@@ -29,17 +29,17 @@ namespace Restaurant_Simulation_Part_1
             }
             this.numberQuality = rand.Next(1, 100);
             return this.numberQuality;
+            
         }
         public void Crack()
         {
-            if (this.numberQuality <= 25)
+            if (GetQuanlity() <= 25)
             {
-                throw new InvalidOperationException("Число не должно быть не меньше 25 ");
-                
+                throw new ArgumentOutOfRangeException("Rotten Egg");   
             }
             else
             {
-
+            
             }
         }
         public void DiscarsShell()
