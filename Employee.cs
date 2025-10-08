@@ -8,8 +8,7 @@ namespace Restaurant_Simulation_Part_1
 {
     public class Employee
     {
-        private ChickenOrder chickenOrder;
-        private EggOrder eggOrder;
+        private object item;
         private string text = string.Empty;
         private bool isPrepared = true;
         public Employee()
@@ -17,24 +16,24 @@ namespace Restaurant_Simulation_Part_1
             
         }
        
-        public object NewRequest( object item,int quantity)
+        public object NewRequest( string food,int quantity)
         {
             this.isPrepared = false;
-            if (item is null)
+            if (food.Equals(""))
             {
                 throw new InvalidOperationException("Нет заказа для приготовления");
             }
            
-            if (item is ChickenOrder)
+            if (food.Equals("chicken"))
             {
                 var chicken = new ChickenOrder(quantity);
-                this.chickenOrder = chicken;
+                this.item = chicken;
                 return chicken;
             }
             else
             {
                 var egg = new EggOrder(quantity);
-                this.eggOrder = egg;
+                this.item = egg;
                 return egg;
             }
            
@@ -42,20 +41,15 @@ namespace Restaurant_Simulation_Part_1
         public object? CopyRequest()
         {
             this.isPrepared = false;
-            if (this.chickenOrder is not null)
+            if (this.item is ChickenOrder)
             {
-                ChickenOrder chicken = new(this.chickenOrder.GetQuantity());
+                ChickenOrder chicken = new(((ChickenOrder)this.item).GetQuantity());
                 return chicken;
             }
-            else if(this.eggOrder is not null)
+            else if (this.item is EggOrder)
             {
-                EggOrder _eggOrder = new(this.eggOrder.GetQuantity());
+                EggOrder _eggOrder = new(((EggOrder)this.item).GetQuantity());
                 return _eggOrder;
-            }
-
-            else if(this.chickenOrder is null && this.eggOrder is null)
-            {
-                throw new InvalidOperationException("Нельзя скопировать: сотрудник ещё не получил ни одного запроса.");
             }
             else
             {
@@ -83,56 +77,40 @@ namespace Restaurant_Simulation_Part_1
 
         public string PrepareFood(object item)
         {
-          
             string text = "";
-            
-           
             try
             {
-
-                
                 if (!this.isPrepared)
                 {
                     if (item is ChickenOrder)
                     {
-                        for (int i = 0; i < chickenOrder.GetQuantity(); i++)
+                        for (int i = 0; i < ((ChickenOrder)item).GetQuantity(); i++)
                         {
-                            chickenOrder.Cutup();
+                            ((ChickenOrder)this.item).Cutup();
                         }
-                        chickenOrder.Cook();
+                        ((ChickenOrder)this.item).Cook();
                         text = "The chicken is ripe ";
                     }
                     else if (item is EggOrder)
                     {
-
-                        text = $"Тухлый {eggOrder.GetQuanlity()}";
-                        for (int i = 0; i < eggOrder.GetQuantity(); i++)
+                        for (int i = 0; i < ((EggOrder)this.item).GetQuantity(); i++)
                         {
-                            eggOrder.Crack();
-                            eggOrder.DiscarsShell();
+                            ((EggOrder)this.item).Crack();
+                            ((EggOrder)this.item).DiscarsShell();
                         }
-                        eggOrder.Cook();
-
-                       
+                        ((EggOrder)this.item).Cook();
+                        text = "Ваш заказ готова ";
                     }
-
-                    else
-                    {
-                        throw new InvalidCastException("Неизвестный тип заказа — сотрудник не знает, как его готовить.");
-                    }
+                 
                     this.isPrepared = true;
-
                 }
                 else
                 {
                     throw new InvalidOperationException("«уже приготовил, больше не может приготовить снова");
                 }
-              
-               
-
                 return text;
             }
-            catch (InvalidCastException ex) 
+            catch (InvalidCastException ex)
             {
                 throw new InvalidOperationException("Сотрудник получил неподдерживаемый заказ.", ex);
             }

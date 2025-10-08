@@ -9,36 +9,32 @@ namespace Restaurant_Simulation_Part_1
     public class EggOrder
     {
         int quantity;
-        bool isQuality = true;
+        static bool isQuality = true;
         private Random rand = new();
-        int numberQuality = 0;
+        private static int numberQuality = 0;
         public EggOrder(int quantity)
         {
             this.quantity = quantity;
+            numberQuality = rand.Next(1, 100);
         }
         public int GetQuantity()
         {
             return this.quantity;
         }
-        public int? GetQuanlity()
+        public static int? GetQuanlity()
         {
-            if (!isQuality)
+            if (!EggOrder.isQuality)
             {
+                isQuality = true;
                 return null;
             }
-            this.numberQuality = rand.Next(1, 100);
-            return this.numberQuality;
-            
+            return numberQuality;
         }
         public void Crack()
         {
             if (GetQuanlity() <= 25)
             {
                 throw new ArgumentOutOfRangeException("Rotten Egg");   
-            }
-            else
-            {
-            
             }
         }
         public void DiscarsShell()

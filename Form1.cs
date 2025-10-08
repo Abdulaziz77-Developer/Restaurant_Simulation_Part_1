@@ -7,6 +7,7 @@ namespace Restaurant_Simulation_Part_1
         
         bool isChicken;
         bool isEgg;
+        private object? obj;
         private EggOrder egg;
         private ChickenOrder chicken;
         private Employee employee = new Employee();
@@ -44,16 +45,14 @@ namespace Restaurant_Simulation_Part_1
                 {
                     if (this.isChicken)
                     {
-                        this.egg = new EggOrder(countItem);
-                        var item = employee.NewRequest(this.egg, countItem);
-                        txtResult.Text += employee.Inspect(item) + Environment.NewLine;
-                        txtQuantity.Text += egg.GetQuanlity();
+                        var obj = employee.NewRequest("chicken", countItem);
+                        txtResult.Text += employee.Inspect(obj) + Environment.NewLine;
+                        txtQuantity.Text += EggOrder.GetQuanlity();
                     }
                     if (this.isEgg)
                     {
-                        this.chicken = new ChickenOrder(countItem);
-                        var item = employee.NewRequest(this.chicken, countItem);
-                        txtResult.Text += employee.Inspect(item) + Environment.NewLine;
+                        var obj = employee.NewRequest("egg", countItem);
+                        txtResult.Text += employee.Inspect(obj) + Environment.NewLine;
 
                     }
                 }
@@ -61,16 +60,15 @@ namespace Restaurant_Simulation_Part_1
                 {
                     if (this.isChicken)
                     {
-                        var objChicken = new ChickenOrder(countItem);
-                       this.chicken = ((ChickenOrder)employee.NewRequest(objChicken, countItem));
-                        txtResult.Text += employee.Inspect(chicken) + Environment.NewLine;
+                       this.obj = ((ChickenOrder)employee.NewRequest("chicken", countItem));
+                       txtResult.Text += employee.Inspect(obj) + Environment.NewLine;
                     }
                     else
                     {
-                        var objEgg = new EggOrder(countItem);
-                        this.egg = ((EggOrder)employee.NewRequest(objEgg, countItem));
-                        txtResult.Text += employee.Inspect(egg) + Environment.NewLine;
-                        countEggQuality.Text = egg.GetQuanlity().ToString();
+                       
+                        this.obj = ((EggOrder)employee.NewRequest("egg", countItem));
+                        txtResult.Text += employee.Inspect(obj) + Environment.NewLine;
+                        countEggQuality.Text = EggOrder.GetQuanlity().ToString();
                     }
                 }
             }
@@ -87,16 +85,16 @@ namespace Restaurant_Simulation_Part_1
             {
 
                 var item = employee.CopyRequest();
-                if (this.isEgg && item != null)
+                if (this.isEgg && obj != null)
                 {
-                    txtQuantity.Text = $"{((EggOrder)item).GetQuantity()}";
-                    txtResult.Text += $"{employee.Inspect((EggOrder)item)}" + Environment.NewLine;
-                    countEggQuality.Text = $"{((EggOrder)item).GetQuanlity()}";
+                    txtQuantity.Text = $"{((EggOrder)obj).GetQuantity()}";
+                    txtResult.Text += $"{employee.Inspect((EggOrder)obj)}" + Environment.NewLine;
+                    countEggQuality.Text = $"{EggOrder.GetQuanlity().ToString()}";
                 }
-                if (this.isChicken && item != null)
+                if (this.isChicken && obj != null)
                 {
-                    txtQuantity.Text = $"{((ChickenOrder)item).GetQuantity()}";
-                    txtResult.Text += $"{employee.Inspect((ChickenOrder)item)}" + Environment.NewLine;
+                    txtQuantity.Text = $"{((ChickenOrder)obj).GetQuantity()}";
+                    txtResult.Text += $"{employee.Inspect((ChickenOrder)obj)}" + Environment.NewLine;
                 }
             }
             catch (Exception ex)
@@ -108,22 +106,25 @@ namespace Restaurant_Simulation_Part_1
 
         private void btnPrepareFood_Click(object sender, EventArgs e)
         {
-
             try
             {
-                if (this.isChicken)
+                if (this.isChicken && obj != null)
                 {
                     string text = txtResult.Text;
-                    var res = employee.PrepareFood(this.chicken);
+                    var res = employee.PrepareFood(obj);
                     MessageBox.Show(res);
                     txtQuantity.Text = "0";
 
                 }
-                else if (this.isEgg)
+                else if (this.isEgg && obj != null)
                 {
-                    var result = employee.PrepareFood(this.egg);
+                    var result = employee.PrepareFood(this.obj);
                     txtQuantity.Text = "0";
                     MessageBox.Show(result);
+                }
+                else
+                {
+                    throw new InvalidCastException("Неизвестный тип заказа — сотрудник не знает, как его готовить.");
                 }
             }
             catch (Exception ex)
