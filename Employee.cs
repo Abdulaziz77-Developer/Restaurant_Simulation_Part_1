@@ -8,14 +8,13 @@ namespace Restaurant_Simulation_Part_1
 {
     public class Employee
     {
-        private object item;
+        private object? item;
         private string text = string.Empty;
         private bool isPrepared = true;
         public Employee()
         {
             
         }
-       
         public object NewRequest( string food,int quantity)
         {
             this.isPrepared = false;
@@ -48,6 +47,7 @@ namespace Restaurant_Simulation_Part_1
             }
             else if (this.item is EggOrder)
             {
+                int countQuality = Convert.ToInt32(EggOrder.GetQuanlity());
                 EggOrder _eggOrder = new(((EggOrder)this.item).GetQuantity());
                 return _eggOrder;
             }
@@ -78,8 +78,8 @@ namespace Restaurant_Simulation_Part_1
         public string PrepareFood(object item)
         {
             string text = "";
-            try
-            {
+            //try
+            //{
                 if (!this.isPrepared)
                 {
                     if (item is ChickenOrder)
@@ -109,11 +109,11 @@ namespace Restaurant_Simulation_Part_1
                     throw new InvalidOperationException("«уже приготовил, больше не может приготовить снова");
                 }
                 return text;
-            }
-            catch (InvalidCastException ex)
-            {
-                throw new InvalidOperationException("Сотрудник получил неподдерживаемый заказ.", ex);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new InvalidOperationException("Сотрудник получил неподдерживаемый заказ.", ex);
+            //}
 
         }
 

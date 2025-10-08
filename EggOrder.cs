@@ -12,6 +12,7 @@ namespace Restaurant_Simulation_Part_1
         static bool isQuality = true;
         private Random rand = new();
         private static int numberQuality = 0;
+        
         public EggOrder(int quantity)
         {
             this.quantity = quantity;
@@ -28,6 +29,7 @@ namespace Restaurant_Simulation_Part_1
                 isQuality = true;
                 return null;
             }
+            EggOrder.isQuality = false;
             return numberQuality;
         }
         public void Crack()
