@@ -11,7 +11,6 @@ namespace Restaurant_Simulation_Part_1
         int quantity;
         bool isQuality = true;
         private Random rand = new();
-        bool isCrack;
         int numberQuality = 0;
         public EggOrder(int quantity)
         {

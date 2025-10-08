@@ -4,15 +4,13 @@ namespace Restaurant_Simulation_Part_1
 {
     public partial class Form1 : Form
     {
-        bool _isEgg;
-        bool _IsChikken;
+        
         bool isChicken;
         bool isEgg;
         private EggOrder egg;
         private ChickenOrder chicken;
         private Employee employee = new Employee();
-        int counter = 1;
-        int wrongnumber = 3;
+       
         static Random random = new Random();
         private int countItem;
         public Form1()
@@ -24,70 +22,12 @@ namespace Restaurant_Simulation_Part_1
 
         private void btnNewRequest_Click(object sender, EventArgs e)
         {
-            #region NewRequest 
-            //    bool isError = random.Next(0, 3) == 0;
-
-            //    if (isError)
-            //    {
-            //        isChicken = rbtnChicken.Checked;
-            //        isEgg = rbtnEgg.Checked;
-            //        if (txtQuantity.Text != string.Empty)
-            //        {
-            //            if (isChicken)
-            //            {
-            //               this.countItem = int.Parse(txtQuantity.Text);
-            //                chicken = (ChickenOrder)employee.NewRequest(1, this.countItem);
-            //                txtResult.Text += $"{employee.Inspect(chicken)} {Environment.NewLine}";
-            //                countEggQuality.Text = "0";
-            //            }
-            //            if (isEgg)
-            //            {
-            //                this.countItem = int.Parse(txtQuantity.Text);
-            //                egg = (EggOrder)employee.NewRequest(2, this.countItem);
-            //                txtResult.Text += $"{employee.Inspect(egg)} {Environment.NewLine}";
-            //                countEggQuality.Text = $"{egg.GetQuanlity()}";
-            //            }
-            //        }
-            //        else
-            //        {
-            //            throw new ArgumentException(
-            //                "—трока не можеть быть пустой null или содержать только пробел ",
-            //                nameof(txtQuantity.Text));
-            //        }
-
-            //    }
-            //    //else if (counter % 2 == 1)
-            //    //{
-            //    //    MessageBox.Show("" +
-            //    //        "—отрудник должень выбрать заказ чтобы заказать нажимету кнопку Prepand Food");
-            //    //    counter++;
-            //    //}
-            //    else
-            //    {
-            //        if (isChicken)
-            //        {
-            //            this.countItem = int.Parse(txtQuantity.Text);
-            //            egg = ((EggOrder)employee.NewRequest(2, this.countItem));
-            //            txtResult.Text += employee.Inspect(egg) + Environment.NewLine;
-            //            countEggQuality.Text = $"{egg.GetQuanlity()}";
-            //        }
-            //        if (isEgg)
-            //        {
-
-            //            this.countItem = int.Parse(txtQuantity.Text);
-            //            chicken = ((ChickenOrder)employee.NewRequest(1, countItem));
-            //            txtResult.Text += employee.Inspect(chicken) + Environment.NewLine;
-            //            countEggQuality.Text = "0";
-            //        }
-            //        //wrongnumber += 3;
-            //        //counter++;
-            //    }
-            #endregion
+            
             this.isChicken = rbtnChicken.Checked;
             this.isEgg = rbtnEgg.Checked;
             bool isErrorRequest = random.Next(0, 3) == 0;
 
-            //MessageBox.Show(countItem.ToString());
+            
             try
             {
                 if (string.IsNullOrEmpty(nameof(txtQuantity.Text)) || txtQuantity.Text == "0")

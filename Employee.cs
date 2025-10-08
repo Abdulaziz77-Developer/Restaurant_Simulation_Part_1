@@ -10,76 +10,13 @@ namespace Restaurant_Simulation_Part_1
     {
         private ChickenOrder chickenOrder;
         private EggOrder eggOrder;
-        private object? myObject;
         private string text = string.Empty;
-        int counter = 1;
-        int wrongNumber = 3;
         private bool isPrepared = true;
         public Employee()
         {
             
         }
-        #region
-        //public object NewRequest(object item, int quantity)
-        //{
-        //    return NewRequest(item, quantity, item is EggOrder(quantity));
-        //}
-        #endregion
-        #region This is bad method to create NewRequest 
-        //public object NewRequest(object item, int quantity)
-        //{
-
-        //    while (counter > 0)
-        //    {
-        //        if (wrongNumber == counter)
-        //        {
-        //            if (item is EggOrder)
-        //            {
-        //                item = new ChickenOrder(quantity);
-        //                chickenOrder = (ChickenOrder)item;
-        //                counter++;
-        //                wrongNumber += 3;
-        //                return item;
-        //            }
-        //            else
-        //            {
-        //                item = new EggOrder(quantity);
-        //                eggOrder = (EggOrder)item;
-        //                counter++;
-        //                wrongNumber += 3;
-        //                return item;
-        //            }
-        //        }
-        //        else if (item is EggOrder)
-        //        {
-        //            item = new EggOrder(quantity);
-        //            eggOrder = (EggOrder)item;
-        //            counter++;
-        //            return item;
-        //        }
-        //        else
-        //        {
-        //            item = new ChickenOrder(quantity);
-        //            chickenOrder = (ChickenOrder)item;
-        //            counter++;
-        //            return item;
-
-        //        }
-
-        //    }
-        //    return item;
-
-        //}
-        #endregion
-
-        #region
-        //public EggOrder? NewRequest(EggOrder egg , int quantity)
-        //{
-        //    egg = new EggOrder(quantity);
-        //    eggOrder = egg;
-        //    return egg;
-        //}
-        #endregion
+       
         public object NewRequest( object item,int quantity)
         {
             this.isPrepared = false;
@@ -149,52 +86,11 @@ namespace Restaurant_Simulation_Part_1
           
             string text = "";
             
-            #region Test Exception
-            //try
-            //{
-
-            //        if (item is ChickenOrder)
-            //        {
-            //            for (int i = 0; i < ((ChickenOrder)item).GetQuantity(); i++)
-            //            {
-            //                ((ChickenOrder)item).Cutup();
-            //            }
-            //            ((ChickenOrder)item).Cook();
-            //            text = "The chicken is ripe ";
-            //        }
-            //        var num = ((EggOrder)item).GetQuanlity();
-            //        if (num > 25)
-            //        {
-            //            text = $"Тухлый {num}";
-            //            if (item is EggOrder)
-            //            {
-            //                for (int i = 0; i < ((EggOrder)item).GetQuantity(); i++)
-            //                {
-            //                    ((EggOrder)item).Crack();
-            //                    ((EggOrder)item).DiscarsShell();
-            //                }
-            //           ((EggOrder)item).Cook();
-
-            //            }
-            //        }
-            //        else
-            //        {
-            //            text = $"Не Тухлый {num}";
-            //        }                   
-
-            //    return text;
-            //}
-            //catch (Exception)
-            //{
-
-            //    throw new Exception("once the food is prepared, the employee cannot be prepare it again");
-            //}
-            #endregion
+           
             try
             {
 
-                //if (counter != 2)
-                //{
+                
                 if (!this.isPrepared)
                 {
                     if (item is ChickenOrder)
@@ -217,10 +113,7 @@ namespace Restaurant_Simulation_Part_1
                         }
                         eggOrder.Cook();
 
-                        //else
-                        //{
-                        //    text = $"Не Тухлый {num}";
-                        //}
+                       
                     }
 
                     else
@@ -235,7 +128,7 @@ namespace Restaurant_Simulation_Part_1
                     throw new InvalidOperationException("«уже приготовил, больше не может приготовить снова");
                 }
               
-                //}
+               
 
                 return text;
             }
