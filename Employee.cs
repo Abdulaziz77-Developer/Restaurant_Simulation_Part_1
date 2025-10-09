@@ -78,8 +78,8 @@ namespace Restaurant_Simulation_Part_1
         public string PrepareFood(object item)
         {
             string text = "";
-            //try
-            //{
+            try
+            {
                 if (!this.isPrepared)
                 {
                     if (item is ChickenOrder)
@@ -109,11 +109,11 @@ namespace Restaurant_Simulation_Part_1
                     throw new InvalidOperationException("«уже приготовил, больше не может приготовить снова");
                 }
                 return text;
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new InvalidOperationException("Сотрудник получил неподдерживаемый заказ.", ex);
-            //}
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Сотрудник получил неподдерживаемый заказ.", ex);
+            }
 
         }
 

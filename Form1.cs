@@ -9,9 +9,8 @@ namespace Restaurant_Simulation_Part_1
         bool isEgg;
         private object? obj;
         private Employee employee = new Employee();
-       
-        static Random random = new Random();
-        private int countItem;
+        private int counter = 0;
+        private int countItem = 1;
         public Form1()
         {
             InitializeComponent();
@@ -26,7 +25,7 @@ namespace Restaurant_Simulation_Part_1
             
             this.isChicken = rbtnChicken.Checked;
             this.isEgg = rbtnEgg.Checked;
-            bool isErrorRequest = random.Next(0, 3) == 0;
+            
             countEggQuality.Text = "0";
 
             
@@ -42,20 +41,21 @@ namespace Restaurant_Simulation_Part_1
                     throw new Exception("Количество не можеть быть меньше с нулю ");
                 }
                 
-                if (isErrorRequest)
+                if (counter  == 3)
                 {
                     if (this.isChicken)
                     {
-                        var obj = employee.NewRequest("egg", countItem);
+                        this.obj = employee.NewRequest("egg", countItem);
                         txtResult.Text += employee.Inspect(obj) + Environment.NewLine;
-                        countEggQuality.Text = EggOrder.GetQuanlity().ToString();
+                        countEggQuality.Text = $"{EggOrder.GetQuanlity()}".ToString();
                     }
                     if (this.isEgg)
                     {
-                        var obj = employee.NewRequest("chicken", countItem);
+                       this.obj = employee.NewRequest("chicken", countItem);
                         txtResult.Text += employee.Inspect(obj) + Environment.NewLine;
 
                     }
+                    this.counter = 1;
                 }
                 else
                 {
@@ -66,11 +66,11 @@ namespace Restaurant_Simulation_Part_1
                     }
                     else
                     {
-                       
                         this.obj = ((EggOrder)employee.NewRequest("egg", countItem));
                         txtResult.Text += employee.Inspect(obj) + Environment.NewLine;
-                        countEggQuality.Text = EggOrder.GetQuanlity().ToString();
+                        countEggQuality.Text = $"{EggOrder.GetQuanlity()}".ToString();
                     }
+                    this.counter++;
                 }
             }
             catch (Exception ex)
@@ -79,7 +79,6 @@ namespace Restaurant_Simulation_Part_1
             }
             txtQuantity.Text = "0";
         }
-
         private void copyRequest_Click(object sender, EventArgs e)
         {
             try
@@ -90,7 +89,7 @@ namespace Restaurant_Simulation_Part_1
                 {
                     txtQuantity.Text = $"{((EggOrder)obj).GetQuantity()}";
                     txtResult.Text += $"{employee.Inspect((EggOrder)obj)}" + Environment.NewLine;
-                    countEggQuality.Text = $"{EggOrder.GetQuanlity().ToString()}";
+                    countEggQuality.Text = $"{EggOrder.GetQuanlity()}";
                 }
                 if (this.isChicken && obj != null)
                 {
@@ -104,31 +103,32 @@ namespace Restaurant_Simulation_Part_1
                 MessageBox.Show(ex.Message);
             }
         }
-
         private void btnPrepareFood_Click(object sender, EventArgs e)
         {
             try
             {
-                
-                if (this.isChicken && obj != null)
+                if (obj is ChickenOrder)
                 {
                     string text = txtResult.Text;
                     var res = employee.PrepareFood(obj);
                     MessageBox.Show(res);
                     txtQuantity.Text = "0";
+                    txtResult.Text = "";
                     return;
                 }
                 else if (Convert.ToInt32(countEggQuality.Text) <= 25)
                 {
                     countEggQuality.Text = "0";
+                    txtResult.Text.ReplaceLineEndings("     ");
                     throw new Exception("Качества яйца не можеть быть меньше 25  ");
                     
                 }
-                else if (this.isEgg && obj != null)
+                else if (obj is EggOrder)
                 {
                     var result = employee.PrepareFood(this.obj);
                     txtQuantity.Text = "0";
-                    MessageBox.Show(result);
+                    MessageBox.Show(result.ToString());
+                    txtResult.Text = "";
                     return;
                 }
                 else
@@ -144,7 +144,7 @@ namespace Restaurant_Simulation_Part_1
             }
         }
         private void txtQuantity_Click(object sender, EventArgs e)
-       {
+        {
             txtQuantity.Text = "";
         }
 

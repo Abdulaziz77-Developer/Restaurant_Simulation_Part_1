@@ -12,11 +12,14 @@ namespace Restaurant_Simulation_Part_1
         static bool isQuality = true;
         private Random rand = new();
         private static int numberQuality = 0;
+        static int counter = 0;
         
         public EggOrder(int quantity)
         {
             this.quantity = quantity;
             numberQuality = rand.Next(1, 100);
+            counter = rand.Next(1, 3);
+            
         }
         public int GetQuantity()
         {
@@ -26,7 +29,7 @@ namespace Restaurant_Simulation_Part_1
         {
             if (!EggOrder.isQuality)
             {
-                isQuality = true;
+                EggOrder.isQuality = true;
                 return null;
             }
             EggOrder.isQuality = false;
