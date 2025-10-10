@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Restaurant_Simulation_Part_1
 {
-    public enum Menu
+    public enum MenuItem
     {
-       Chicken=1,
-       Egg=2
+       Chicken,
+       Egg,
+       Drinks,
+       NoDrinks
     }
 }

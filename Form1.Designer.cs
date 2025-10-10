@@ -41,7 +41,7 @@
             countEggQuality = new Label();
             btnPrepareFood = new Button();
             label4 = new Label();
-            listBox1 = new ListBox();
+            listOrders = new ListBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -157,21 +157,21 @@
             label4.TabIndex = 7;
             label4.Text = "Results";
             // 
-            // listBox1
+            // listOrders
             // 
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 31;
-            listBox1.Location = new Point(45, 462);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(580, 159);
-            listBox1.TabIndex = 8;
+            listOrders.FormattingEnabled = true;
+            listOrders.ItemHeight = 31;
+            listOrders.Location = new Point(45, 462);
+            listOrders.Name = "listOrders";
+            listOrders.Size = new Size(580, 159);
+            listOrders.TabIndex = 8;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(14F, 31F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(659, 653);
-            Controls.Add(listBox1);
+            Controls.Add(listOrders);
             Controls.Add(label4);
             Controls.Add(btnPrepareFood);
             Controls.Add(countEggQuality);
@@ -204,6 +204,6 @@
         private TextBox countChicken;
         private Label eggLabel;
         private Label chickenLabel;
-        private ListBox listBox1;
+        private ListBox listOrders;
     }
 }
