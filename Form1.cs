@@ -1,156 +1,63 @@
+using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Restaurant_Simulation_Part_1
 {
     public partial class Form1 : Form
     {
-        
-        bool isChicken;
-        bool isEgg;
-        private object? obj;
-        private Employee employee = new Employee();
-        private int counter = 0;
-        private int countItem = 1;
+        private Drinks[] drinks = { Drinks.Tea, Drinks.Fanta, Drinks.Coffee, Drinks.Pepsi };
+        private Drinks[] drinkrequest = { };
+        Server server = new Server();
+        private Menu[] menus = { };
         public Form1()
         {
             InitializeComponent();
-            txtQuantity.Text = "0";
-            rbtnChicken.Checked = false;
-            rbtnEgg.Checked = true;
+            countEgg.Text = "0";
+            countChicken.Text = "0";
+            chickenLabel.Text = $"How many {Menu.Chicken.ToString()}?";
+            eggLabel.Text = $"How many {Menu.Egg.ToString()}?";
+            foreach (var item in drinks)
+            {
+                 drinksBox.Items.Add(item.ToString());
+            }
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
         }
 
         private void btnNewRequest_Click(object sender, EventArgs e)
         {
-            
-            this.isChicken = rbtnChicken.Checked;
-            this.isEgg = rbtnEgg.Checked;
-            
-            countEggQuality.Text = "0";
-
-            
             try
             {
-                if (string.IsNullOrEmpty(nameof(txtQuantity.Text)) || txtQuantity.Text == "0" || txtQuantity.Text == "")
+                if (string.IsNullOrWhiteSpace(countChicken.Text)
+                || Convert.ToInt32(countChicken.Text) < 0 ||
+                string.IsNullOrWhiteSpace(countEgg.Text) ||
+                Convert.ToInt32(countEgg.Text) < 0)
                 {
-                    throw new InvalidOperationException("Количество не можеть быть равень нулю или пустой  ");
-                }
-                countItem = int.Parse(txtQuantity.Text);
-                if (countItem < 0 || countItem == 0)
-                {
-                    throw new Exception("Количество не можеть быть меньше с нулю ");
-                }
-                
-                if (counter  == 3)
-                {
-                    if (this.isChicken)
-                    {
-                        this.obj = employee.NewRequest("egg", countItem);
-                        txtResult.Text += employee.Inspect(obj) + Environment.NewLine;
-                        countEggQuality.Text = $"{EggOrder.GetQuanlity()}".ToString();
-                    }
-                    if (this.isEgg)
-                    {
-                       this.obj = employee.NewRequest("chicken", countItem);
-                        txtResult.Text += employee.Inspect(obj) + Environment.NewLine;
-
-                    }
-                    this.counter = 1;
+                    throw new OverflowException("Cannot convert string to int or input is null or whitespace ");
                 }
                 else
                 {
-                    if (this.isChicken)
+                    int amountEgg = Convert.ToInt32(countEgg.Text);
+                    int amountChicken = Convert.ToInt32(countChicken.Text);
+                    for (int i = 0; i < amountEgg; i++)
                     {
-                       this.obj = ((ChickenOrder)employee.NewRequest("chicken", countItem));
-                       txtResult.Text += employee.Inspect(obj) + Environment.NewLine;
+                        menus.Append(Menu.Egg);
                     }
-                    else
+                    for (int i = 0; i < amountChicken; i++)
                     {
-                        this.obj = ((EggOrder)employee.NewRequest("egg", countItem));
-                        txtResult.Text += employee.Inspect(obj) + Environment.NewLine;
-                        countEggQuality.Text = $"{EggOrder.GetQuanlity()}".ToString();
+                        menus.Append(Menu.Chicken);
                     }
-                    this.counter++;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            txtQuantity.Text = "0";
-        }
-        private void copyRequest_Click(object sender, EventArgs e)
-        {
-            try
-            {
-
-                var item = employee.CopyRequest();
-                if (this.isEgg && obj != null)
-                {
-                    txtQuantity.Text = $"{((EggOrder)obj).GetQuantity()}";
-                    txtResult.Text += $"{employee.Inspect((EggOrder)obj)}" + Environment.NewLine;
-                    countEggQuality.Text = $"{EggOrder.GetQuanlity()}";
-                }
-                if (this.isChicken && obj != null)
-                {
-                    txtQuantity.Text = $"{((ChickenOrder)obj).GetQuantity()}";
-                    txtResult.Text += $"{employee.Inspect((ChickenOrder)obj)}" + Environment.NewLine;
-                }
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
-            }
-        }
-        private void btnPrepareFood_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (obj is ChickenOrder)
-                {
-                    string text = txtResult.Text;
-                    var res = employee.PrepareFood(obj);
-                    MessageBox.Show(res);
-                    txtQuantity.Text = "0";
-                    txtResult.Text = "";
-                    return;
-                }
-                else if (Convert.ToInt32(countEggQuality.Text) <= 25)
-                {
-                    countEggQuality.Text = "0";
-                    txtResult.Text.ReplaceLineEndings("     ");
-                    throw new Exception("Качества яйца не можеть быть меньше 25  ");
                     
                 }
-                else if (obj is EggOrder)
-                {
-                    var result = employee.PrepareFood(this.obj);
-                    txtQuantity.Text = "0";
-                    MessageBox.Show(result.ToString());
-                    txtResult.Text = "";
-                    return;
-                }
-                else
-                {
-                    throw new InvalidCastException("Неизвестный тип заказа — сотрудник не знает, как его готовить.");
-                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                countEggQuality.Text = "0";
-
             }
-        }
-        private void txtQuantity_Click(object sender, EventArgs e)
-        {
-            txtQuantity.Text = "";
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
+            //var number = Menu.Chicken;
+            //MessageBox.Show($"{(int)number}");
         }
     }
 }

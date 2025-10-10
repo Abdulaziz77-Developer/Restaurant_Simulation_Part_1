@@ -6,24 +6,17 @@ using System.Threading.Tasks;
 
 namespace Restaurant_Simulation_Part_1
 {
-    public  class ChickenOrder
+    public  class ChickenOrder :Order
     {
         private int quantity;
-        public ChickenOrder(int _quantity)
+        public ChickenOrder(int _quantity):base(_quantity)
         {
             this.quantity = _quantity;
-        }
-        public int GetQuantity()
-        {
-            return quantity;
         }
 
         public void Cutup()
         {
 
-        }
-        public void Cook()
-        {
         }
     }
 }

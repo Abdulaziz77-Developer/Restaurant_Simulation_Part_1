@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Restaurant_Simulation_Part_1
 {
-    public class EggOrder
+    public class EggOrder : Order
     {
         int quantity;
         static bool isQuality = true;
@@ -14,16 +14,12 @@ namespace Restaurant_Simulation_Part_1
         private static int numberQuality = 0;
         static int counter = 0;
         
-        public EggOrder(int quantity)
+        public EggOrder(int quantity):base(quantity)
         {
             this.quantity = quantity;
             numberQuality = rand.Next(1, 100);
             counter = rand.Next(1, 3);
             
-        }
-        public int GetQuantity()
-        {
-            return this.quantity;
         }
         public static int? GetQuanlity()
         {
@@ -42,13 +38,6 @@ namespace Restaurant_Simulation_Part_1
                 throw new ArgumentOutOfRangeException("Rotten Egg");   
             }
         }
-        public void DiscarsShell()
-        {
-
-        }
-        public void Cook()
-        {
-        }
-       
+        public void DiscarsShell() { }  
     }
 }
