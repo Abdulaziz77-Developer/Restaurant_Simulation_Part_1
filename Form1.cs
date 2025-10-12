@@ -6,8 +6,8 @@ namespace Restaurant_Simulation_Part_1
     public partial class Form1 : Form
     {
         private Drinks[] drinks = { Drinks.Tea, Drinks.Fanta, Drinks.Coffee, Drinks.Pepsi };
-        private Drinks[] drinkrequest = { };
-        Waiter waiter = new Waiter(); 
+        //private Drinks[] drinkrequest = { };
+        Waiter waiter = new Waiter();
         public Form1()
         {
             InitializeComponent();
@@ -29,11 +29,22 @@ namespace Restaurant_Simulation_Part_1
         {
             int amountEgg = int.Parse(countChicken.Text);
             int amountChicken = int.Parse(countEgg.Text);
+            string drink;
+            if (drinksBox.SelectedItem is  null)
+            {
+                drink = "Nodrink";
+            }
+            else
+            {
+                drink = drinksBox.SelectedItem.ToString();
+            }
+                MessageBox.Show($"{drink}");
             try
             {
                 waiter.NewOrder(amountChicken, amountEgg);
+                waiter.SetDrinks(drink);
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
 
                 MessageBox.Show(ex.Message);
@@ -76,5 +87,29 @@ namespace Restaurant_Simulation_Part_1
             #endregion
         }
 
+        private void SendRequestForCook_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                waiter.SendAllRequestsToEmployee();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void ServePrepareFood_Click(object sender, EventArgs e)
+        {
+            var items = waiter.ServeFoodToCustomers();
+            var _drinks = waiter.GetAllClientDrinks();
+            for (int i = 0; i < items.Length; i++)
+            {
+                for (int j = 0; j < items[i].Length; j++)
+                {
+                    listOrders.Items.Add($"Client {i + 1} Chicken {items[i][j].GetQuantity()} Egg {items[i][j].GetQuantity()} Drink {_drinks[i]} ");
+                }
+            }
+        }
     }
 }

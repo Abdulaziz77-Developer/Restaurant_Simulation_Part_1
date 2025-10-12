@@ -33,10 +33,10 @@ namespace Restaurant_Simulation_Part_1
         }
         public void Crack()
         {
-            if (GetQuanlity() <= 25)
-            {
-                throw new ArgumentOutOfRangeException("Rotten Egg");   
-            }
+            //if (GetQuanlity() <= 25)
+            //{
+            //    throw new ArgumentOutOfRangeException("Rotten Egg");   
+            //}
         }
         public void DiscarsShell() { }  
     }

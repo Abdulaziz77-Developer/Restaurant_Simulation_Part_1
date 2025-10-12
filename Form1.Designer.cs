@@ -36,10 +36,10 @@
             eggLabel = new Label();
             chickenLabel = new Label();
             btnNewRequest = new Button();
-            copyRequest = new Button();
+            SendRequestForCook = new Button();
             label2 = new Label();
             countEggQuality = new Label();
-            btnPrepareFood = new Button();
+            ServePrepareFood = new Button();
             label4 = new Label();
             listOrders = new ListBox();
             groupBox1.SuspendLayout();
@@ -112,14 +112,15 @@
             btnNewRequest.UseVisualStyleBackColor = true;
             btnNewRequest.Click += btnNewRequest_Click;
             // 
-            // copyRequest
+            // SendRequestForCook
             // 
-            copyRequest.Location = new Point(84, 255);
-            copyRequest.Name = "copyRequest";
-            copyRequest.Size = new Size(459, 38);
-            copyRequest.TabIndex = 3;
-            copyRequest.Text = "Send all Customer  requests to the Cook";
-            copyRequest.UseVisualStyleBackColor = true;
+            SendRequestForCook.Location = new Point(84, 255);
+            SendRequestForCook.Name = "SendRequestForCook";
+            SendRequestForCook.Size = new Size(459, 38);
+            SendRequestForCook.TabIndex = 3;
+            SendRequestForCook.Text = "Send all Customer  requests to the Cook";
+            SendRequestForCook.UseVisualStyleBackColor = true;
+            SendRequestForCook.Click += SendRequestForCook_Click;
             // 
             // label2
             // 
@@ -139,14 +140,15 @@
             countEggQuality.TabIndex = 5;
             countEggQuality.Text = "0";
             // 
-            // btnPrepareFood
+            // ServePrepareFood
             // 
-            btnPrepareFood.Location = new Point(84, 366);
-            btnPrepareFood.Name = "btnPrepareFood";
-            btnPrepareFood.Size = new Size(459, 38);
-            btnPrepareFood.TabIndex = 6;
-            btnPrepareFood.Text = "Serve prepare food to the Customer ";
-            btnPrepareFood.UseVisualStyleBackColor = true;
+            ServePrepareFood.Location = new Point(84, 366);
+            ServePrepareFood.Name = "ServePrepareFood";
+            ServePrepareFood.Size = new Size(459, 38);
+            ServePrepareFood.TabIndex = 6;
+            ServePrepareFood.Text = "Serve prepare food to the Customer ";
+            ServePrepareFood.UseVisualStyleBackColor = true;
+            ServePrepareFood.Click += ServePrepareFood_Click;
             // 
             // label4
             // 
@@ -173,10 +175,10 @@
             ClientSize = new Size(659, 653);
             Controls.Add(listOrders);
             Controls.Add(label4);
-            Controls.Add(btnPrepareFood);
+            Controls.Add(ServePrepareFood);
             Controls.Add(countEggQuality);
             Controls.Add(label2);
-            Controls.Add(copyRequest);
+            Controls.Add(SendRequestForCook);
             Controls.Add(groupBox1);
             Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
             Margin = new Padding(5);
@@ -194,10 +196,10 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private GroupBox groupBox1;
         private Button btnNewRequest;
-        private Button copyRequest;
+        private Button SendRequestForCook;
         private Label label2;
         private Label countEggQuality;
-        private Button btnPrepareFood;
+        private Button ServePrepareFood;
         private Label label4;
         private ComboBox drinksBox;
         private TextBox countEgg;

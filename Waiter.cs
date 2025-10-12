@@ -9,7 +9,7 @@ namespace Restaurant_Simulation_Part_1
     public class Waiter
     {
         private Employee employee = new Employee();
-        private Drinks[] drinks;
+        private string[] drinks = new string[8];
         private MenuItem[][] menuItems = new MenuItem[8][];
         private int currentClient = 0;
         private int counterForDrinks = 0;
@@ -47,26 +47,32 @@ namespace Restaurant_Simulation_Part_1
             
             currentClient++;
         }
-        public Drinks[] GetAllDrinksOrder(object? selectedDrink)
+        public void  SetDrinks(string selectedDrink)
         {
-            if (string.IsNullOrEmpty(nameof(selectedDrink)) || selectedDrink is null)
+            if(selectedDrink == null)
             {
-                drinks[counterForDrinks] = Drinks.NoDrink;
+                throw new ArgumentNullException("Не известный напиток ");
+            }
+            if (selectedDrink == "NoDrink")
+            {
+                this.drinks[counterForDrinks] = Drinks.NoDrink.ToString();
                 counterForDrinks++;
             }
-            drinks[counterForDrinks] = ((Drinks)selectedDrink);
+            this.drinks[counterForDrinks] = selectedDrink;
             counterForDrinks++;
-            return drinks;
-
         }
-        public void SendRequestsToEmployee()
+        public string[] GetAllClientDrinks()
+        {
+            return this.drinks;
+        }
+        public void SendAllRequestsToEmployee()
         {
             employee.RequestForFood(menuItems);
         }
 
         public Order[][] ServeFoodToCustomers()
         {
-            var res  = employee.PrepareFood();
+            var res  = this.employee.PrepareFoodss();
             return res;
         }
     }
