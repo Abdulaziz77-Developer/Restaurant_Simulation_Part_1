@@ -19,18 +19,18 @@ namespace Restaurant_Simulation_Part_1
         {
              menuItems = menus;
         }
-        // can you help me this method to make it better
+     
 
         public Order[][] PrepareFoodss()
         {
-            // 1️⃣ Проверяем, есть ли вообще меню
+          
             if (menuItems == null)
                 throw new InvalidOperationException("Menu items have not been set. Waiter must call RequestForFood() first.");
 
-            // 2️⃣ Создаём массив заказов под всех клиентов
+            
             orders = new Order[menuItems.Length][];
 
-            // 3️⃣ Для каждого клиента создаём список заказов
+            
             for (int i = 0; i < menuItems.Length; i++)
             {
                 orders[i] = new Order[menuItems[i].Length];
@@ -84,41 +84,93 @@ namespace Restaurant_Simulation_Part_1
             }
             return this.orders;
         }
-
         public Order[][] PrepareFoods()
         {
 
+            if (menuItems == null)
+                throw new InvalidOperationException("Menu items have not been set. Waiter must call RequestForFood() first.");
+
+            
             orders = new Order[menuItems.Length][];
+
+         
             for (int i = 0; i < menuItems.Length; i++)
             {
+               
+                if (menuItems[i] == null)
+                {
+                    orders[i] = Array.Empty<Order>();
+                    continue;
+                }
                 orders[i] = new Order[menuItems[i].Length];
+
+                
                 for (int j = 0; j < menuItems[i].Length; j++)
                 {
-                    if (menuItems[i][j] is MenuItem.Chicken)
+                    var item = menuItems[i][j];
+
+                    if (item == MenuItem.Chicken)
                     {
-                       //for(int k = 0; k < menuItems[i].Length; i++)
-                       // {
-                            obj = new ChickenOrder(menuItems[i].Length);
-                            ((ChickenOrder)obj).Cutup();
-                            orders[i][j] = ((ChickenOrder)obj);
-                        //}
-                       ((ChickenOrder)obj).Cook();
+                        var chicken = new ChickenOrder(1);
+                        chicken.Cutup();
+                        chicken.Cook();
+                        orders[i][j] = chicken;
+                    }
+                    else if (item == MenuItem.Egg)
+                    {
+                        var egg = new EggOrder(1);
+                        egg.DiscarsShell();
+                        egg.Crack();
+                        egg.Cook();
+                        orders[i][j] = egg;
                     }
                     else
                     {
-                        //for (int e = 0; e < menuItems[i].Length; e++)
-                        //{
-                            obj = new EggOrder(menuItems[i].Length);
-                            ((EggOrder)obj).DiscarsShell();
-                            ((EggOrder)obj).Crack();
-                            orders[i][j] = ((EggOrder)obj);
-                        //}
-                         ((EggOrder)obj).Cook();
+                        
+                        throw new ArgumentException($"Unknown menu item at [{i},{j}]: {item}");
                     }
                 }
             }
+
             return orders;
         }
+
+        #region PrepareFoods old version
+        //public Order[][] PrepareFoods()
+        //{
+
+        //    orders = new Order[menuItems.Length][];
+        //    for (int i = 0; i < menuItems.Length; i++)
+        //    {
+        //        orders[i] = new Order[menuItems[i].Length];
+        //        for (int j = 0; j < menuItems[i].Length; j++)
+        //        {
+        //            if (menuItems[i][j] is MenuItem.Chicken)
+        //            {
+        //               //for(int k = 0; k < menuItems[i].Length; i++)
+        //               // {
+        //                    obj = new ChickenOrder(menuItems[i].Length);
+        //                    ((ChickenOrder)obj).Cutup();
+        //                    orders[i][j] = ((ChickenOrder)obj);
+        //                //}
+        //               ((ChickenOrder)obj).Cook();
+        //            }
+        //            else
+        //            {
+        //                //for (int e = 0; e < menuItems[i].Length; e++)
+        //                //{
+        //                    obj = new EggOrder(menuItems[i].Length);
+        //                    ((EggOrder)obj).DiscarsShell();
+        //                    ((EggOrder)obj).Crack();
+        //                    orders[i][j] = ((EggOrder)obj);
+        //                //}
+        //                 ((EggOrder)obj).Cook();
+        //            }
+        //        }
+        //    }
+        //    return orders;
+        //}
+        #endregion
         #region Old PrepareFood
         //public string PrepareFood(object item)
         //{

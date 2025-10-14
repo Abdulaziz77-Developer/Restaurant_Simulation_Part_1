@@ -76,6 +76,7 @@
             countEgg.Name = "countEgg";
             countEgg.Size = new Size(48, 38);
             countEgg.TabIndex = 10;
+            countEgg.Click += countEgg_Click;
             // 
             // countChicken
             // 
@@ -83,6 +84,7 @@
             countChicken.Name = "countChicken";
             countChicken.Size = new Size(48, 38);
             countChicken.TabIndex = 9;
+            countChicken.Click += countChicken_Click;
             // 
             // eggLabel
             // 

@@ -27,10 +27,10 @@ namespace Restaurant_Simulation_Part_1
 
         private void btnNewRequest_Click(object sender, EventArgs e)
         {
-            int amountEgg = int.Parse(countChicken.Text);
-            int amountChicken = int.Parse(countEgg.Text);
+            int amountChicken = int.Parse(countChicken.Text);
+            int amountEgg = int.Parse(countEgg.Text);
             string drink;
-            if (drinksBox.SelectedItem is  null)
+            if (drinksBox.SelectedItem is null)
             {
                 drink = "Nodrink";
             }
@@ -38,7 +38,7 @@ namespace Restaurant_Simulation_Part_1
             {
                 drink = drinksBox.SelectedItem.ToString();
             }
-                MessageBox.Show($"{drink}");
+            MessageBox.Show($"{drink}");
             try
             {
                 waiter.NewOrder(amountChicken, amountEgg);
@@ -101,15 +101,73 @@ namespace Restaurant_Simulation_Part_1
 
         private void ServePrepareFood_Click(object sender, EventArgs e)
         {
+            int _amountchicken = 0;
+            int _amountegg = 0;
             var items = waiter.ServeFoodToCustomers();
             var _drinks = waiter.GetAllClientDrinks();
             for (int i = 0; i < items.Length; i++)
             {
-                for (int j = 0; j < items[i].Length; j++)
+                _amountchicken = 0;
+                _amountegg = 0;
+                if (items[i] is null)
                 {
-                    listOrders.Items.Add($"Client {i + 1} Chicken {items[i][j].GetQuantity()} Egg {items[i][j].GetQuantity()} Drink {_drinks[i]} ");
+                    //continue;
+                }
+                else
+                {
+                    for (int j = 0; j < items[i].Length; j++)
+                    {
+                        if (items[i][j] is null)
+                        {
+                            break;
+                        }
+                        if (items[i][j] is ChickenOrder)
+                        {
+                            _amountchicken++;
+                        }
+                        else if (items[i][j] is EggOrder)
+                        {
+                            _amountegg++;
+                        }
+                        countEggQuality.Text = $"{EggOrder.GetQuanlity()}";
+
+                    }
+                    try
+                    {
+                        if (Convert.ToInt32(countEggQuality.Text) < 25)
+                        {
+                            throw new InvalidOperationException("Quantity egg dont isnt small 25");
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                    if (_amountchicken is 0 && _amountegg is 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        listOrders.Items.Add($"Client {i + 1} Chicken {_amountchicken} Egg {_amountegg} Drink {_drinks[i]} ");
+                    }
+
                 }
             }
+            countEgg.Text = "0";
+            countChicken.Text = "0";
+
+        }
+
+        private void countChicken_Click(object sender, EventArgs e)
+        {
+            countChicken.Text = "";
+        }
+
+        private void countEgg_Click(object sender, EventArgs e)
+        {
+            countEgg.Text = "";
         }
     }
 }

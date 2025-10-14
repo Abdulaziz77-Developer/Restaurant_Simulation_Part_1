@@ -72,7 +72,7 @@ namespace Restaurant_Simulation_Part_1
 
         public Order[][] ServeFoodToCustomers()
         {
-            var res  = this.employee.PrepareFoodss();
+            var res  = this.employee.PrepareFoods();
             return res;
         }
     }
