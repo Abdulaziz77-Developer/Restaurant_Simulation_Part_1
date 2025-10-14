@@ -38,7 +38,7 @@ namespace Restaurant_Simulation_Part_1
             {
                 drink = drinksBox.SelectedItem.ToString();
             }
-            MessageBox.Show($"{drink}");
+           
             try
             {
                 waiter.NewOrder(amountChicken, amountEgg);
@@ -49,42 +49,7 @@ namespace Restaurant_Simulation_Part_1
 
                 MessageBox.Show(ex.Message);
             }
-            #region TestNewOrderRequest
-            //if (currentClient >= 8)
-            //{
-            //    MessageBox.Show("Уже 8 клиентов! Нельзя добавить больше.");
-            //    return;
-            //}
-
-            //int chickenCount = int.Parse(countChicken.Text);
-            //int eggCount = int.Parse(countEgg.Text);
-            //string? selectedDrink = drinksBox.SelectedItem?.ToString();
-
-            //int totalItems = chickenCount + eggCount + 1;
-            //menuItems[currentClient] = new MenuItem[totalItems];
-
-            //int index = 0;
-            //for (int i = 0; i < chickenCount; i++)
-            //    menuItems[currentClient][index++] = MenuItem.Chicken;
-
-            //for (int i = 0; i < eggCount; i++)
-            //    menuItems[currentClient][index++] = MenuItem.Egg;
-            //if (string.IsNullOrWhiteSpace(selectedDrink))
-            //{
-            //    //menuItems[currentClient][index] = MenuItem.NoDrinks;
-            //    selectedDrink = MenuItem.NoDrinks.ToString();
-            //}
-            //menuItems[currentClient][index] = MenuItem.Drinks;
-
-            ////listOrders.Items.Add($"Client {currentClient + 1}: {chickenCount} Chicken, {eggCount} Egg, Drink = {selectedDrink}");
-            //MessageBox.Show(menuItems[0].Length.ToString());
-            //currentClient++;
-
-
-            //countChicken.Text = "0";
-            //countEgg.Text = "0";
-            //drinksBox.SelectedIndex = 0;
-            #endregion
+           
         }
 
         private void SendRequestForCook_Click(object sender, EventArgs e)
@@ -105,13 +70,17 @@ namespace Restaurant_Simulation_Part_1
             int _amountegg = 0;
             var items = waiter.ServeFoodToCustomers();
             var _drinks = waiter.GetAllClientDrinks();
+            try
+            {
+
+           
             for (int i = 0; i < items.Length; i++)
             {
                 _amountchicken = 0;
                 _amountegg = 0;
                 if (items[i] is null)
                 {
-                    //continue;
+                    
                 }
                 else
                 {
@@ -154,6 +123,12 @@ namespace Restaurant_Simulation_Part_1
                     }
 
                 }
+            }
+            }
+            catch (Exception ex )
+            {
+
+                MessageBox.Show(ex.Message);
             }
             countEgg.Text = "0";
             countChicken.Text = "0";

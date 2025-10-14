@@ -19,7 +19,7 @@ namespace Restaurant_Simulation_Part_1
         }
         public void NewOrder(int chickenCount, int eggCount)
         {
-            if (chickenCount < 0 || eggCount < 0 )
+            if (chickenCount <= 0 && eggCount <= 0 )
             {
                 throw new Exception("count the egg or chicken cannot small the zero ");
             }

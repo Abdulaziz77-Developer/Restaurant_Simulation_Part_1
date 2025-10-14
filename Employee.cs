@@ -21,70 +21,10 @@ namespace Restaurant_Simulation_Part_1
         }
      
 
-        public Order[][] PrepareFoodss()
-        {
-          
-            if (menuItems == null)
-                throw new InvalidOperationException("Menu items have not been set. Waiter must call RequestForFood() first.");
+   
 
-            
-            orders = new Order[menuItems.Length][];
-
-            
-            for (int i = 0; i < menuItems.Length; i++)
-            {
-                orders[i] = new Order[menuItems[i].Length];
-
-                for (int j = 0; j < menuItems[i].Length; j++)
-                {
-                    if (menuItems[i][j] == MenuItem.Chicken)
-                    {
-                        var chicken = new ChickenOrder(1);
-                        chicken.Cutup();
-                        chicken.Cook();
-                        orders[i][j] = chicken;
-                    }
-                    else if (menuItems[i][j] == MenuItem.Egg)
-                    {
-                        var egg = new EggOrder(1);
-                        egg.DiscarsShell();
-                        egg.Crack();
-                        egg.Cook();
-                        orders[i][j] = egg;
-                    }
-                }
-            }
-
-            return orders;
-        }
-
+       
         public Order[][] PrepareFood()
-        {
-            for (int i = 0; i < menuItems.Length; i++)
-            {
-                orders[i] = new Order[menuItems[i].Length];
-                for (int j = 0; j < menuItems[i].Length; j++)
-                {
-                    if (menuItems[i][j] is MenuItem.Chicken)
-                    {
-                        obj = new ChickenOrder(menuItems[i].Length);
-                        ((ChickenOrder)obj).Cutup();
-                        ((ChickenOrder)obj).Cook();
-                        this.orders[i][j] = ((ChickenOrder)obj);
-                    }
-                    else
-                    {
-                        obj = new EggOrder(menuItems[i].Length);
-                        ((EggOrder)obj).DiscarsShell();
-                        ((EggOrder)obj).Crack();
-                        ((EggOrder)obj).Cook();
-                        this.orders[i][j] = (((EggOrder)obj));
-                    }
-                }
-            }
-            return this.orders;
-        }
-        public Order[][] PrepareFoods()
         {
 
             if (menuItems == null)
