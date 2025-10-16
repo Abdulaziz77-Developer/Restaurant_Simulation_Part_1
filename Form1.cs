@@ -7,8 +7,8 @@ namespace Restaurant_Simulation_Part_1
     {
         private MenuItem[] drinks = { MenuItem.Tea, MenuItem.Fanta, MenuItem.Cola,  MenuItem.Coffee};
         Server server = new Server();
-        private MenuItem[][] menuitems = new MenuItem[8][];
-        private int countClient = 0;
+        //private MenuItem[][] menuitems = new MenuItem[8][];
+        //private int countClient = 0;
         public Form1()
         {
             InitializeComponent();
@@ -92,69 +92,6 @@ namespace Restaurant_Simulation_Part_1
             countChicken.Text = "0";
 
         }
-        #region
-        //int _amountchicken = 0;
-        //int _amountegg = 0;
-        //var items = server.ServeFoodToCustomers();
-
-        //try
-        //{
-        //for (int i = 0; i < items.Length; i++)
-        //{
-        //    _amountchicken = 0;
-        //    _amountegg = 0;
-        //    if (items[i] is null)
-        //    {
-
-        //    }
-        //    else
-        //    {
-        //        for (int j = 0; j < items[i].Length; j++)
-        //        {
-        //            if (items[i][j] is null)
-        //            {
-        //                break;
-        //            }
-        //            if (items[i][j] is ChickenOrder)
-        //            {
-        //                _amountchicken++;
-        //            }
-        //            else if (items[i][j] is EggOrder)
-        //            {
-        //                _amountegg++;
-        //            }
-        //            countEggQuality.Text = $"{EggOrder.GetQuanlity()}";
-
-        //        }
-        //        try
-        //        {
-        //            if (Convert.ToInt32(countEggQuality.Text) < 25)
-        //            {
-        //                throw new InvalidOperationException("Quantity egg dont isnt small 25");
-        //            }
-        //        }
-        //        catch (Exception)
-        //        {
-
-        //            throw;
-        //        }
-        //        if (_amountchicken is 0 && _amountegg is 0)
-        //        {
-        //            continue;
-        //        }
-        //        else
-        //        {
-        //            listOrders.Items.Add($"Client {i + 1} Chicken {_amountchicken} Egg {_amountegg} Drink ");
-        //        }
-        //    }
-        //}
-        //}
-        //catch (Exception ex)
-        //{
-
-        //    MessageBox.Show(ex.Message);
-        //}
-        #endregion
         private void countChicken_Click(object sender, EventArgs e)
         {
             countChicken.Text = "";

@@ -10,8 +10,6 @@ namespace Restaurant_Simulation_Part_1
     {
         MenuItem[][] menuItems;
         Order order;
-        Order[] orders = new Order[] { };
-        int index = 0;
         public Cook()
         {
 
@@ -40,20 +38,7 @@ namespace Restaurant_Simulation_Part_1
                 ((ChickenOrder)order).Cutup();
                 ((ChickenOrder)order).Cook();
             }
-            //for (int i = 0; i < orders.Length; i++)
-            //{
-            //    if (orders[i] is ChickenOrder)
-            //    {
-            //        ((ChickenOrder)orders[i]).Cutup();
-            //        ((ChickenOrder)orders[i]).Cook();
-            //    }
-            //    else
-            //    {
-            //        ((EggOrder)orders[i]).DiscarsShell();
-            //        ((EggOrder)orders[i]).Crack();
-            //        ((EggOrder)orders[i]).Cook();
-            //    }
-            //}
+           
         }
     }
 }
