@@ -23,12 +23,6 @@ namespace Restaurant_Simulation_Part_1
         }
         public static int? GetQuanlity()
         {
-            //if (!EggOrder.isQuality)
-            //{
-            //    EggOrder.isQuality = true;
-            //    return null;
-            //}
-            //EggOrder.isQuality = false;
             return numberQuality;
         }
         public void Crack()

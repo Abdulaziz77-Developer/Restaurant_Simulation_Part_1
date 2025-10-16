@@ -10,7 +10,11 @@ namespace Restaurant_Simulation_Part_1
     {
        Chicken,
        Egg,
-       Drinks,
+       Pepsi,
+       Tea,
+       Fanta,
+       Cola,
+       Coffee,
        NoDrinks
     }
 }
