@@ -54,6 +54,7 @@ namespace Restaurant_Simulation_Part_1
                 server.ReceiveRequestfromasingleCustomer(amountChicken, amountEgg, drinkItem);
                 listOrders.Items.Clear();
                 countEggQuality.Text = "0";
+               
             }
             catch (Exception ex)
             {
@@ -63,6 +64,7 @@ namespace Restaurant_Simulation_Part_1
             countChicken.Text = "0";
             countEgg.Text = "0";
             listOrders.Items.Clear();
+            drinksBox.SelectedItem = "";
         }
 
         private void SendRequestForCook_Click(object sender, EventArgs e)
