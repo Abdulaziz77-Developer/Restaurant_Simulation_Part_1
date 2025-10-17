@@ -5,9 +5,9 @@ namespace Restaurant_Simulation_Part_1
 {
     public partial class Form1 : Form
     {
-        private MenuItem[] drinks = { MenuItem.Tea, MenuItem.Fanta, MenuItem.Cola,  MenuItem.Coffee};
+        private MenuItem[] drinks = { MenuItem.Tea, MenuItem.Fanta, MenuItem.Cola, MenuItem.Coffee };
         Server server = new Server();
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -29,10 +29,10 @@ namespace Restaurant_Simulation_Part_1
         {
             try
             {
-              if (string.IsNullOrWhiteSpace(countChicken.Text) || 
-                  string.IsNullOrWhiteSpace(countEgg.Text) ||
-                  string.IsNullOrEmpty(countChicken.Text) || 
-                  string.IsNullOrEmpty(countEgg.Text))
+                if (string.IsNullOrWhiteSpace(countChicken.Text) ||
+                    string.IsNullOrWhiteSpace(countEgg.Text) ||
+                    string.IsNullOrEmpty(countChicken.Text) ||
+                    string.IsNullOrEmpty(countEgg.Text))
                 {
                     throw new Exception("amountegg or amountchicken does not be empty or null");
                 }
@@ -44,7 +44,7 @@ namespace Restaurant_Simulation_Part_1
                 }
                 MenuItem drinkItem;
                 if (drinksBox.SelectedItem == null)
-                {   
+                {
                     drinkItem = MenuItem.NoDrinks;
                 }
                 else
@@ -54,7 +54,7 @@ namespace Restaurant_Simulation_Part_1
                 server.ReceiveRequestfromasingleCustomer(amountChicken, amountEgg, drinkItem);
                 listOrders.Items.Clear();
                 countEggQuality.Text = "0";
-               
+
             }
             catch (Exception ex)
             {
@@ -91,19 +91,24 @@ namespace Restaurant_Simulation_Part_1
                 listOrders.Items.Add(result[i]);
                 countEggQuality.Text = $"{EggOrder.GetQuanlity()}";
             }
-            
+
             countEgg.Text = "0";
             countChicken.Text = "0";
 
         }
         private void countChicken_Click(object sender, EventArgs e)
-       {
+        {
             countChicken.Text = "";
         }
 
         private void countEgg_Click(object sender, EventArgs e)
         {
             countEgg.Text = "";
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

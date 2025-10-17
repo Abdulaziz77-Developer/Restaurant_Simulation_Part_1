@@ -8,7 +8,6 @@ namespace Restaurant_Simulation_Part_1
 {
     public class Cook
     {
-        MenuItem[][] menuItems;
         Order order;
         public Cook()
         {
@@ -29,14 +28,21 @@ namespace Restaurant_Simulation_Part_1
         {
             if (order is EggOrder)
             {
-                ((EggOrder)order).DiscarsShell();
-                ((EggOrder)order).Crack();
-                ((EggOrder)order).Cook();
+                for (int i = 0; i < order.GetQuantity(); i++)
+                {
+                    ((EggOrder)order).DiscarsShell();
+                    ((EggOrder)order).Crack();
+                    order.Cook();
+                }
             }
             else
             {
-                ((ChickenOrder)order).Cutup();
-                ((ChickenOrder)order).Cook();
+                for (int i = 0; i < order.GetQuantity(); i++)
+                {
+                    ((ChickenOrder)order).Cutup();
+                    order.Cook();
+                }
+               
             }
            
         }

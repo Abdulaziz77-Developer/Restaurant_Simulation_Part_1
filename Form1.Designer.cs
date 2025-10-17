@@ -61,6 +61,7 @@
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Mune";
+            groupBox1.Enter += groupBox1_Enter;
             // 
             // drinksBox
             // 
