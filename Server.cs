@@ -19,9 +19,14 @@ namespace Restaurant_Simulation_Part_1
         }
         public void ReceiveRequestfromasingleCustomer(int amountChicken, int amountEgg, MenuItem item)
         {
-            int total = amountChicken + amountEgg;
+            int total = amountChicken + amountEgg+1;
             int index = 0;
+            if (currentClient == 8 )
+            {
+                throw new Exception("One table may be give 8 person ");
+            }
             menuItems[currentClient] = new MenuItem[total];
+
                 for (int j = 0; j < amountChicken; j++)
                 {
                     menuItems[currentClient][index++] = MenuItem.Chicken;
@@ -59,7 +64,6 @@ namespace Restaurant_Simulation_Part_1
                     }
                 }
             }
-
             cook.RequestForFood(counterEgg, MenuItem.Egg);
             cook.RequestForFood(counterChicken,MenuItem.Chicken);
         }
@@ -68,8 +72,7 @@ namespace Restaurant_Simulation_Part_1
         {
             int countChicken = 0;
             int countEgg = 0;
-            string[] result =new string[menuItems.Length];
-            
+            string[] result = new string[menuItems.Length];
             for (int i = 0; i < menuItems.Length; i++)
             {
                 countEgg = 0;
@@ -87,11 +90,11 @@ namespace Restaurant_Simulation_Part_1
                     else
                     {
                         countEgg++;
-                    }
-                    result[i] = $"Client {i + 1} Chicken {countChicken} Egg {countEgg} Drink {drinks[i]} ";
+                    }   
                 }
+                result[i] = $"Client {i+1} Chicken {countChicken} Egg {countEgg} Drink {drinks[i]} ";
             }
-                
+              
             return result;
         }
     }

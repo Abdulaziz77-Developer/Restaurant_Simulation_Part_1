@@ -20,7 +20,12 @@ namespace Restaurant_Simulation_Part_1
         }
         public static int? GetQuanlity()
         {
+            if (numberQuality <  25)
+            {
+                numberQuality = new Random().Next(1, 100);
+            }
             return numberQuality;
+            
         }
         public void Crack()
         {

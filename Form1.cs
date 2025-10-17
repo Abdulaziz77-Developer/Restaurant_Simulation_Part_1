@@ -7,8 +7,7 @@ namespace Restaurant_Simulation_Part_1
     {
         private MenuItem[] drinks = { MenuItem.Tea, MenuItem.Fanta, MenuItem.Cola,  MenuItem.Coffee};
         Server server = new Server();
-        //private MenuItem[][] menuitems = new MenuItem[8][];
-        //private int countClient = 0;
+        
         public Form1()
         {
             InitializeComponent();
@@ -45,7 +44,7 @@ namespace Restaurant_Simulation_Part_1
                 }
                 MenuItem drinkItem;
                 if (drinksBox.SelectedItem == null)
-                {
+                {   
                     drinkItem = MenuItem.NoDrinks;
                 }
                 else
@@ -53,6 +52,8 @@ namespace Restaurant_Simulation_Part_1
                     drinkItem = (MenuItem)drinksBox.SelectedItem;
                 }
                 server.ReceiveRequestfromasingleCustomer(amountChicken, amountEgg, drinkItem);
+                listOrders.Items.Clear();
+                countEggQuality.Text = "0";
             }
             catch (Exception ex)
             {
@@ -86,6 +87,7 @@ namespace Restaurant_Simulation_Part_1
                     continue;
                 }
                 listOrders.Items.Add(result[i]);
+                countEggQuality.Text = $"{EggOrder.GetQuanlity()}";
             }
             
             countEgg.Text = "0";
@@ -93,7 +95,7 @@ namespace Restaurant_Simulation_Part_1
 
         }
         private void countChicken_Click(object sender, EventArgs e)
-        {
+       {
             countChicken.Text = "";
         }
 
