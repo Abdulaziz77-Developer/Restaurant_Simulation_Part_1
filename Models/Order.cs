@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurant_Simulation_Part_1
+namespace Restaurant_Simulation_Part_1.Models
 {
-    public  class Order
+    public  class Order : MenuItem
     {
         private int _quantity;
         public Order(int quantity)

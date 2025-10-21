@@ -1,3 +1,5 @@
+using Restaurant_Simulation_Part_1.Models;
+using Restaurant_Simulation_Part_1.Service;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography.X509Certificates;
 

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Restaurant_Simulation_Part_1.Models;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurant_Simulation_Part_1
+namespace Restaurant_Simulation_Part_1.Service
 {
     public class Server
     {
