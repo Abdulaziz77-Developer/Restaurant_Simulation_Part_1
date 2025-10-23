@@ -1,104 +1,53 @@
 ﻿using Restaurant_Simulation_Part_1.Models;
-using System;
-using System.Collections.Generic;
-using System.Drawing.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Restaurant_Simulation_Part_1.Models.Drinks;
+using static Restaurant_Simulation_Part_1.Service.TableRequest;
 
 namespace Restaurant_Simulation_Part_1.Service
 {
     public class Server
     {
-        private Cook cook = new Cook();
-        private string[] drinks = new string[8];
-        private MenuItem[][] menuItems = new MenuItem[8][];
-        private int currentClient = 0;
-        private int counterForDrinks = 0;
         public Server()
         {
-
-        }
-        public void ReceiveRequestfromasingleCustomer(int amountChicken, int amountEgg, MenuItem item)
-        {
-            int total = amountChicken + amountEgg+1;
-            int index = 0;
-            if (currentClient == 8 )
-            {
-                throw new Exception("One table may be give 8 person ");
-            }
-            menuItems[currentClient] = new MenuItem[total];
-
-                for (int j = 0; j < amountChicken; j++)
-                {
-                    menuItems[currentClient][index++] = MenuItem.Chicken;
-                }
-                for (int k = 0; k < amountEgg; k++)
-                {
-                    menuItems[currentClient][index++] = MenuItem.Egg;
-                }
-                drinks[counterForDrinks++] = item.ToString();
-                currentClient++;
-        }
             
-        public void SendAllRequestsToCook()
+        }
+        public void Receive(TableRequest table)
         {
-            int counterChicken = 0;
-            int counterEgg = 0;
-            for (int i = 0; i < menuItems.Length; i++)
-            {
-                if (menuItems[i] is null)
-                {
-                    continue;
-                }
-                else
-                {
-                    for (int j = 0; j < menuItems[i].Length; j++)
-                    {
-                        if (menuItems[i][j] is MenuItem.Egg)
-                        {
-                            counterEgg++;
-                        }
-                        else
-                        {
-                            counterChicken++;
-                        }
-                    }
-                }
-            }
-            cook.RequestForFood(counterEgg, MenuItem.Egg);
-            cook.RequestForFood(counterChicken,MenuItem.Chicken);
+            table.Add(0, new ChickenOrder(5));
+            table.Add(0, new Egg(5));
+            table.Add(0, new Drink("Tea"));
+
+            table.Add(1, new ChickenOrder(2));
+            table.Add(1, new Drink("Coca Cola"));
+
+            table.Add(2, new Egg(7));
+            table.Add(2, new Egg(6));
         }
 
-        public string[] ServeFoodToCustomers()
+        public void Send(Cook cook, TableRequest table)
         {
-            int countChicken = 0;
-            int countEgg = 0;
-            string[] result = new string[menuItems.Length];
-            for (int i = 0; i < menuItems.Length; i++)
+            cook.Process(table);
+        }
+
+        public void Serve(TableRequest table)
+        {
+            for (int c = 0; c < 3; c++)
             {
-                countEgg = 0;
-                countChicken = 0;
-                if (menuItems[i] is null)
+                var items = table[c];
+                Console.Write($"Customer {c} is served ");
+                int chicken = 0, egg = 0;
+                string drink = "no drink";
+
+                foreach (var item in items)
                 {
-                    continue;
+                    if (item is ChickenOrder) chicken++;
+                    else if (item is Egg) egg++;
+                    else if (item is Drink) drink = $"{(Drink)item}";
                 }
-                for (int j = 0; j < menuItems[i].Length; j++)
-                {
-                    if (menuItems[i][j] is MenuItem.Chicken)
-                    {
-                        countChicken++;
-                    }
-                    else
-                    {
-                        countEgg++;
-                    }   
-                }
-                result[i] = $"Client {i+1} Chicken {countChicken} Egg {countEgg} Drink {drinks[i]} ";
+
+                Console.WriteLine($"{chicken} chicken, {egg} egg, {drink}");
             }
-            menuItems = new MenuItem[8][];
-            currentClient = 0;
-            return result;
+
+            Console.WriteLine("Please enjoy your food!");
         }
     }
 }
