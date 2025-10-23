@@ -1,6 +1,5 @@
 ﻿using Restaurant_Simulation_Part_1.Interfaces;
 using Restaurant_Simulation_Part_1.Models;
-using Restaurant_Simulation_Part_1.Models.Drinks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ namespace Restaurant_Simulation_Part_1.Service
 {
     public class Cook
     {
-        public void Process(TableRequests table)
+        public void Process(TableRequest table)
         {
             var chickens = table[new ChickenOrder(2)];
             foreach (var item in chickens)
@@ -38,9 +37,5 @@ namespace Restaurant_Simulation_Part_1.Service
             }
         }
 
-        internal void Process(TableRequest table)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

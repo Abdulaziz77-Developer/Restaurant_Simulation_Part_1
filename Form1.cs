@@ -8,11 +8,14 @@ namespace Restaurant_Simulation_Part_1
     public partial class Form1 : Form
     {
      
+        private readonly string[] drinks = { "CocaCola", "Fanta", "Sprite", "Water" };
+        private Server server = new Server();
 
         public Form1()
         {
             InitializeComponent();
-           
+            drinksBox.Items.AddRange(drinks);
+
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -21,14 +24,43 @@ namespace Restaurant_Simulation_Part_1
 
         private void btnNewRequest_Click(object sender, EventArgs e)
         {
+            listOrders.Items.Clear();
+            int amountEgg = int.Parse(countEgg.Text);
+            int amountChicken = int.Parse(countChicken.Text);
+            string drinkName = "";
             
+            if (drinksBox.SelectedItem == null)
+            {
+                drinkName = "No Drink";
+            }
+            else
+            {
+                drinkName = drinksBox.SelectedItem.ToString();
+            }
+            server.NewRequest(amountChicken, amountEgg, drinkName);
+            countEgg.Text = "0";
+            countChicken.Text = "0";
+            drinksBox.Items.Clear();
+            for (int i = 0; i < drinks.Length; i++)
+            {
+                drinksBox.Items.Add(drinks[i]);
+            }
+
         }
 
         private void SendRequestForCook_Click(object sender, EventArgs e)
         {
+            server.Send();
         }
         private void ServePrepareFood_Click(object sender, EventArgs e)
         {
+             var results = server.Serve();
+             listOrders.Items.Clear();
+            listOrders.HorizontalScrollbar = true;
+            foreach (var result in results)
+            {
+                listOrders.Items.Add(result);
+            }
         }
         private void countChicken_Click(object sender, EventArgs e)
         {

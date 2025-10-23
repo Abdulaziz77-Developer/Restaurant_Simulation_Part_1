@@ -1,53 +1,78 @@
 ﻿using Restaurant_Simulation_Part_1.Models;
-using Restaurant_Simulation_Part_1.Models.Drinks;
 using static Restaurant_Simulation_Part_1.Service.TableRequest;
 
 namespace Restaurant_Simulation_Part_1.Service
 {
     public class Server
     {
-        public Server()
+        private TableRequest table = new TableRequest();
+        private int currentCliet = 0;
+        private Cook cook = new Cook();
+        private string[]? results = new string[] { };
+        string[]? drinks = new string[] { }; 
+        public void NewRequest(int amountChicken, int amountEgg, string drinkName)
         {
-            
+            if (amountChicken < 0 || amountEgg < 0 || string.IsNullOrEmpty(drinkName))
+            {
+                throw new ArgumentException("Invalid order parameters.");
+            }
+            for(int i = 0; i < amountChicken; i++)
+            {
+                table.Add(currentCliet, new ChickenOrder(1));
+            }
+            for (int j = 0; j < amountEgg; j++)
+            {
+                table.Add(currentCliet, new Egg(1));
+            }
+            if (drinks.Length <= currentCliet)
+            {
+                Array.Resize(ref drinks, currentCliet + 1);
+            }
+            drinks[currentCliet] = drinkName;
+            currentCliet++;
         }
-        public void Receive(TableRequest table)
-        {
-            table.Add(0, new ChickenOrder(5));
-            table.Add(0, new Egg(5));
-            table.Add(0, new Drink("Tea"));
-
-            table.Add(1, new ChickenOrder(2));
-            table.Add(1, new Drink("Coca Cola"));
-
-            table.Add(2, new Egg(7));
-            table.Add(2, new Egg(6));
-        }
-
-        public void Send(Cook cook, TableRequest table)
-        {
+        public void Send()
+        { 
+           
             cook.Process(table);
         }
 
-        public void Serve(TableRequest table)
+        public string[] Serve()
         {
-            for (int c = 0; c < 3; c++)
+            int countEgg = 0;
+            int countChicken = 0;
+            int i = 0;
+            
+            while (table[i] != null)
             {
-                var items = table[c];
-                Console.Write($"Customer {c} is served ");
-                int chicken = 0, egg = 0;
-                string drink = "no drink";
-
-                foreach (var item in items)
+                if (table[i] == null)
                 {
-                    if (item is ChickenOrder) chicken++;
-                    else if (item is Egg) egg++;
-                    else if (item is Drink) drink = $"{(Drink)item}";
+                    break;
                 }
-
-                Console.WriteLine($"{chicken} chicken, {egg} egg, {drink}");
+                for (int j = 0; j < table[i].Length; j++)
+                {
+                    var items = table[i];
+                    foreach (var item in items)
+                    {
+                        if (item is Egg)
+                        {
+                            countEgg++;
+                        }
+                        else
+                        {
+                            countChicken++;
+                        }
+                    }
+                    Array.Resize(ref results, i + 1);
+                    results[i] = $"Customer {i + 1} served with {countChicken} Chicken(s) and {countEgg} Egg(s)  Drink {drinks[i]}";
+                    break;
+                }
+                i++;
             }
-
-            Console.WriteLine("Please enjoy your food!");
+            table = new TableRequest();
+            drinks = new string[] { };
+            currentCliet = 0;
+            return results;
         }
     }
 }
