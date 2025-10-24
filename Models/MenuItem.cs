@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace Restaurant_Simulation_Part_1.Models
 {
-    public  abstract class MenuItem : IMenuItem
+    public abstract class MenuItem : IMenuItem
     {
-
+        protected MenuItem()
+        {
+            
+        }
         public string Name { get; protected set; }
         public string State { get; protected set; }
 

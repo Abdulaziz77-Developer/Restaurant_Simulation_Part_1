@@ -32,11 +32,6 @@ namespace Restaurant_Simulation_Part_1.Service
                 
                 
         }
-        public void Send(TableRequest table)
-        {
-           
-            cook.Process(table);
-        }
 
         public IMenuItem[] this[int customer]
         {

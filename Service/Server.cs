@@ -9,7 +9,7 @@ namespace Restaurant_Simulation_Part_1.Service
         private int currentCliet = 0;
         private Cook cook = new Cook();
         private string[]? results = new string[] { };
-        string[]? drinks = new string[] { }; 
+        string  drinkName = "";
         public void NewRequest(int amountChicken, int amountEgg, string drinkName)
         {
             if (amountChicken < 0 || amountEgg < 0 || string.IsNullOrEmpty(drinkName))
@@ -18,17 +18,14 @@ namespace Restaurant_Simulation_Part_1.Service
             }
             for(int i = 0; i < amountChicken; i++)
             {
-                table.Add(currentCliet, new ChickenOrder(1));
+                table.Add(currentCliet, new ChickenOrder());
             }
             for (int j = 0; j < amountEgg; j++)
             {
-                table.Add(currentCliet, new Egg(1));
+                table.Add(currentCliet, new Egg());
             }
-            if (drinks.Length <= currentCliet)
-            {
-                Array.Resize(ref drinks, currentCliet + 1);
-            }
-            drinks[currentCliet] = drinkName;
+            Drink drink = new Drink(drinkName);
+            table.Add(currentCliet, drink);
             currentCliet++;
         }
         public void Send()
@@ -58,19 +55,24 @@ namespace Restaurant_Simulation_Part_1.Service
                         {
                             countEgg++;
                         }
+                        else if(item is Drink)
+                        {
+                            drinkName = ((Drink)item).Name;
+                        }
                         else
                         {
                             countChicken++;
                         }
+                        
                     }
                     Array.Resize(ref results, i + 1);
-                    results[i] = $"Customer {i + 1} served with {countChicken} Chicken(s) and {countEgg} Egg(s)  Drink {drinks[i]}";
+                    results[i] = $"Customer {i + 1} served with {countChicken} Chicken(s) and {countEgg} Egg(s)  Drink {drinkName}";
                     break;
                 }
                 i++;
             }
             table = new TableRequest();
-            drinks = new string[] { };
+            drinkName = string.Empty;
             currentCliet = 0;
             return results;
         }
