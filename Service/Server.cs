@@ -38,17 +38,12 @@ namespace Restaurant_Simulation_Part_1.Service
         {
             int countEgg = 0;
             int countChicken = 0;
-            int i = 0;
-            
-            while (table[i] != null)
-            {
-                if (table[i] == null)
+
+            for (int k = 0; k < table.GetCountCustomer(); k++)
+            { 
+                for (int j = 0; j < table[k].Length; j++)
                 {
-                    break;
-                }
-                for (int j = 0; j < table[i].Length; j++)
-                {
-                    var items = table[i];
+                    var items = table[k];
                     foreach (var item in items)
                     {
                         if (item is Egg)
@@ -65,11 +60,14 @@ namespace Restaurant_Simulation_Part_1.Service
                         }
                         
                     }
-                    Array.Resize(ref results, i + 1);
-                    results[i] = $"Customer {i + 1} served with {countChicken} Chicken(s) and {countEgg} Egg(s)  Drink {drinkName}";
+                    Array.Resize(ref results, k + 1);
+                    results[k] = $"Customer {k + 1} served with {countChicken} Chicken(s) and {countEgg} Egg(s)  Drink {drinkName}";
                     break;
                 }
-                i++;
+                drinkName = "";
+                countChicken = 0;
+                countEgg = 0;
+
             }
             table = new TableRequest();
             drinkName = string.Empty;

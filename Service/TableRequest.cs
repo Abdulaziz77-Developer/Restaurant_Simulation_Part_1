@@ -8,8 +8,6 @@ namespace Restaurant_Simulation_Part_1.Service
         private IMenuItem[] items = { };
         private Cook cook = new Cook();
         private int countCustomer = 1;
-
-
         public void Add(int customer, IMenuItem item)
         {
             if (item == null)
@@ -28,9 +26,6 @@ namespace Restaurant_Simulation_Part_1.Service
                 menuItems[customer][menuItems[customer].Length - 1] = item;
                 countCustomer = customer;
             }
-
-                
-                
         }
 
         public IMenuItem[] this[int customer]
@@ -42,6 +37,10 @@ namespace Restaurant_Simulation_Part_1.Service
                 }
                 return menuItems[customer];
             }
+        }
+        public int GetCountCustomer()
+        {
+            return menuItems.Length;
         }
 
         public IMenuItem[] this[IMenuItem item]
