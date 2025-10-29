@@ -24,6 +24,7 @@ namespace Restaurant_Simulation_Part_1
 
         private void btnNewRequest_Click(object sender, EventArgs e)
         {
+            countEggQuality.Text = "0";
             listOrders.Items.Clear();
             int amountEgg = int.Parse(countEgg.Text);
             int amountChicken = int.Parse(countChicken.Text);
@@ -61,6 +62,7 @@ namespace Restaurant_Simulation_Part_1
             {
                 listOrders.Items.Add(result);
             }
+            countEggQuality.Text = $"{Egg.GetQuality}";
         }
         private void countChicken_Click(object sender, EventArgs e)
         {
