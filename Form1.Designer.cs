@@ -42,11 +42,13 @@
             ServePrepareFood = new Button();
             label4 = new Label();
             listOrders = new ListBox();
+            userName = new TextBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(userName);
             groupBox1.Controls.Add(drinksBox);
             groupBox1.Controls.Add(countEgg);
             groupBox1.Controls.Add(countChicken);
@@ -171,6 +173,13 @@
             listOrders.Size = new Size(580, 159);
             listOrders.TabIndex = 8;
             // 
+            // userName
+            // 
+            userName.Location = new Point(372, 92);
+            userName.Name = "userName";
+            userName.Size = new Size(151, 38);
+            userName.TabIndex = 12;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(14F, 31F);
@@ -210,5 +219,6 @@
         private Label eggLabel;
         private Label chickenLabel;
         private ListBox listOrders;
+        private TextBox userName;
     }
 }

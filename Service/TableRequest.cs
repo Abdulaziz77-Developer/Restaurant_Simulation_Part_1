@@ -1,66 +1,70 @@
 ﻿using Restaurant_Simulation_Part_1.Interfaces;
+using Restaurant_Simulation_Part_1.Models;
+using System.Security.Policy;
 
 namespace Restaurant_Simulation_Part_1.Service
 {
     public class TableRequest
     {
-        private IMenuItem[][] menuItems = { };
-        private IMenuItem[] items = { };
-        private Cook cook = new Cook();
-        private int countCustomer = 1;
-        public void Add(int customer, IMenuItem item)
+        public Dictionary<string, List<IMenuItem>> menuItems = new Dictionary<string, List<IMenuItem>>();
+        public Cook cook = new Cook();
+        private string? username;
+        public void Add<T>(string name) where T : IMenuItem, new()
         {
+            var item = Activator.CreateInstance<T>();
+            if (!menuItems.ContainsKey(name))
+            {
+                menuItems[name] = new List<IMenuItem>();
+            }
             if (item == null)
             {
-                throw new ArgumentNullException("item not be null");
+                throw new ArgumentNullException("item is not be null");
             }
-            if (countCustomer == customer)
-            {
-                Array.Resize(ref menuItems[customer], menuItems[customer]?.Length + 1 ?? 1);
-                menuItems[customer][menuItems[customer].Length - 1] = item;
-            }
-            else
-            {
-                Array.Resize(ref menuItems, menuItems.Length + 1);
-                Array.Resize(ref menuItems[customer], menuItems[customer]?.Length + 1 ?? 1);
-                menuItems[customer][menuItems[customer].Length - 1] = item;
-                countCustomer = customer;
-            }
+            //if (username == name)
+            //{
+            //    menuItems.Add(name, new List<IMenuItem> { item });
+            //}
+            menuItems[name].Add(item);
+            username = name;
         }
-
-        public IMenuItem[] this[int customer]
+        public void Add(string name, string drink)
         {
-            get { 
-                if (customer < 0 || customer >= menuItems.Length)
+            Drink _drink = new(drink);
+            menuItems[name].Add(_drink);
+        }
+        public   List<T> Get<T>() where T : IMenuItem 
+        {
+            var listOrders = new List<T>();
+            var order = Activator.CreateInstance<T>();
+            foreach (var item in menuItems.Values)
+            {
+                foreach (var item1 in item)
                 {
-                    return null;
+                    if (item1.GetType() == order.GetType())
+                    {
+                        listOrders.Add(order);
+                    }
                 }
-                return menuItems[customer];
             }
-        }
-        public int GetCountCustomer()
-        {
-            return menuItems.Length;
+            return listOrders;
         }
 
-        public IMenuItem[] this[IMenuItem item]
+        public List<IMenuItem> this[string name]
         {
             get
             {
-                for (int i = 0; i < menuItems.Length; i++)
+                if (menuItems.TryGetValue(name,out var list))
                 {
-                    if (menuItems[i] == null) continue;
-                    for (int j = 0; j < menuItems[i].Length; j++)
-                    {
-                        if (item != null && item.GetType() == menuItems[i][j].GetType())
-                        {
-                            Array.Resize(ref items, items.Length + 1);
-                            items[i] = item;
-                        }
-                    }
+                    return list;
                 }
-                return items;
+                else
+                {
+                    return new List<IMenuItem>();
+                }
+                
             }
         }
+        
+
     }
 }

@@ -9,7 +9,7 @@ namespace Restaurant_Simulation_Part_1
     {
      
         private readonly string[] drinks = { "CocaCola", "Fanta", "Sprite", "Water" };
-        private Server server = new Server();
+        public  Server server = new Server();
 
         public Form1()
         {
@@ -28,7 +28,8 @@ namespace Restaurant_Simulation_Part_1
             listOrders.Items.Clear();
             int amountEgg = int.Parse(countEgg.Text);
             int amountChicken = int.Parse(countChicken.Text);
-            string drinkName = "";
+            string? drinkName = "";
+            string name = userName.Text;
             
             if (drinksBox.SelectedItem == null)
             {
@@ -38,7 +39,7 @@ namespace Restaurant_Simulation_Part_1
             {
                 drinkName = drinksBox.SelectedItem.ToString();
             }
-            server.NewRequest(amountChicken, amountEgg, drinkName);
+            server.NewRequest(name,amountChicken, amountEgg, drinkName);
             countEgg.Text = "0";
             countChicken.Text = "0";
             drinksBox.Items.Clear();
@@ -51,18 +52,18 @@ namespace Restaurant_Simulation_Part_1
 
         private void SendRequestForCook_Click(object sender, EventArgs e)
         {
-            server.Send();
+            server.SendOrdersToCook();
         }
         private void ServePrepareFood_Click(object sender, EventArgs e)
         {
-             var results = server.Serve();
-             listOrders.Items.Clear();
+            var results = server.Serve();
+            listOrders.Items.Clear();
             listOrders.HorizontalScrollbar = true;
             foreach (var result in results)
             {
                 listOrders.Items.Add(result);
             }
-            countEggQuality.Text = $"{Egg.GetQuality}";
+            //countEggQuality.Text = $"{Egg.GetQuality}";
         }
         private void countChicken_Click(object sender, EventArgs e)
         {
