@@ -23,11 +23,16 @@ namespace Restaurant_Simulation_Part_1.Service
             names.Add(name);
             result = new();
         }
-        public void SendOrdersToCook()
+        public Server()
         {
             ServerDelegate += cook.Process;
-            ServerDelegate?.Invoke(table);
             cook.CookDelegate += Serve;
+        }
+        public void SendOrdersToCook()
+        {
+           
+            ServerDelegate?.Invoke(table);
+           
         }
 
         public List<string> Serve()

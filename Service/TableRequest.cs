@@ -7,12 +7,9 @@ namespace Restaurant_Simulation_Part_1.Service
     public class TableRequest
     {
         private  Dictionary<string, List<IMenuItem>> menuItems = new Dictionary<string, List<IMenuItem>>();
-
-        private string? username;
         public void Add<T>(string name,string drinkName = "No Drink") where T : IMenuItem, new()
         {
             var item = Activator.CreateInstance<T>();
-            
             if (!menuItems.ContainsKey(name))
             {
                 menuItems[name] = new List<IMenuItem>();
@@ -27,12 +24,7 @@ namespace Restaurant_Simulation_Part_1.Service
                 menuItems[name].Add(drink);
                 return;
             }
-            //if (username == name)
-            //{
-            //    menuItems.Add(name, new List<IMenuItem>());
-            //}
             menuItems[name].Add(item);
-            username = name;
         }
         public void Add(string name, string drink)
         {
@@ -68,10 +60,7 @@ namespace Restaurant_Simulation_Part_1.Service
                 {
                     throw new Exception("its user not found in customer user ");
                 }
-                
             }
         }
-        
-
     }
 }

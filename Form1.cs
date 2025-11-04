@@ -47,7 +47,6 @@ namespace Restaurant_Simulation_Part_1
             {
                 drinksBox.Items.Add(drinks[i]);
             }
-
         }
 
         private void SendRequestForCook_Click(object sender, EventArgs e)
