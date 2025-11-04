@@ -6,12 +6,13 @@ namespace Restaurant_Simulation_Part_1.Service
 {
     public class TableRequest
     {
-        public Dictionary<string, List<IMenuItem>> menuItems = new Dictionary<string, List<IMenuItem>>();
-        public Cook cook = new Cook();
+        private  Dictionary<string, List<IMenuItem>> menuItems = new Dictionary<string, List<IMenuItem>>();
+
         private string? username;
-        public void Add<T>(string name) where T : IMenuItem, new()
+        public void Add<T>(string name,string drinkName = "No Drink") where T : IMenuItem, new()
         {
             var item = Activator.CreateInstance<T>();
+            
             if (!menuItems.ContainsKey(name))
             {
                 menuItems[name] = new List<IMenuItem>();
@@ -20,9 +21,15 @@ namespace Restaurant_Simulation_Part_1.Service
             {
                 throw new ArgumentNullException("item is not be null");
             }
+            if (item is Drink)
+            {
+                var drink = new Drink(drinkName);
+                menuItems[name].Add(drink);
+                return;
+            }
             //if (username == name)
             //{
-            //    menuItems.Add(name, new List<IMenuItem> { item });
+            //    menuItems.Add(name, new List<IMenuItem>());
             //}
             menuItems[name].Add(item);
             username = name;
@@ -59,7 +66,7 @@ namespace Restaurant_Simulation_Part_1.Service
                 }
                 else
                 {
-                    return new List<IMenuItem>();
+                    throw new Exception("its user not found in customer user ");
                 }
                 
             }

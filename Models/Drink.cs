@@ -10,9 +10,17 @@ namespace Restaurant_Simulation_Part_1.Models
     public sealed class Drink : MenuItem
     {
         new public string? Name { get; }
+        public Drink()
+        {
+            
+        }
         public Drink(string name) : base(name) 
         {
             Name = name;
+        }
+        public override string ToString()
+        {
+            return Name;
         }
 
         public override void Obtain() => State = "Obtained";

@@ -10,7 +10,6 @@ namespace Restaurant_Simulation_Part_1.Service
         public delegate List<string> ServerDelegate();
         public ServerDelegate? CookDelegate;
         public TableRequest table = new TableRequest();
-        public Server server = new Server();
         public void Process(TableRequest table)
         {
             if (table == null)
@@ -33,32 +32,6 @@ namespace Restaurant_Simulation_Part_1.Service
                 }
             }
             CookDelegate?.Invoke();
-            #region
-            //public Server server = new Server();
-            //public delegate string[] CookHandler();
-            //public event  CookHandler Notify;
-            //public void Process(TableRequest table)
-            //{
-
-            //    //var chickens = table[new CookedFood()];
-            //    //foreach (var item in chickens)
-            //    //{
-            //    //    if (item is Egg e)
-            //    //    {
-            //    //        using (e)
-            //    //        {
-            //    //            e.Crack();
-            //    //        }
-            //    //    }
-            //    //    else if(item is ChickenOrder c)
-            //    //    {
-            //    //        c.CutUp();
-            //    //    }
-            //    //    ((CookedFood)item).Cook();
-            //    //}
-            //    //Notify?.Invoke();
-            //}
-            #endregion
         }
     }
 }

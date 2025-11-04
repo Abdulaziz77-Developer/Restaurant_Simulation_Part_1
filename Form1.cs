@@ -63,7 +63,7 @@ namespace Restaurant_Simulation_Part_1
             {
                 listOrders.Items.Add(result);
             }
-            //countEggQuality.Text = $"{Egg.GetQuality}";
+            countEggQuality.Text = $"{Egg.GetQuality}";
         }
         private void countChicken_Click(object sender, EventArgs e)
         {
