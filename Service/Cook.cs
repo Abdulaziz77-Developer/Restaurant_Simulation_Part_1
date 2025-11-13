@@ -7,9 +7,6 @@ namespace Restaurant_Simulation_Part_1.Service
 {
     public class Cook
     {
-        public delegate List<string> ServerDelegate();
-        public ServerDelegate? CookDelegate;
-        public TableRequest table = new TableRequest();
         public void Process(TableRequest table)
         {
             if (table == null)
@@ -21,6 +18,7 @@ namespace Restaurant_Simulation_Part_1.Service
             {
                 item.CutUp();
                 item.Cook();
+                Thread.Sleep(2000);
             }
             var eggs = table.Get<Egg>();
             foreach (var egg in eggs)
@@ -30,8 +28,8 @@ namespace Restaurant_Simulation_Part_1.Service
                     egg.Crack();
                     egg.Cook();
                 }
+                Thread.Sleep(2000);
             }
-            CookDelegate?.Invoke();
         }
     }
 }

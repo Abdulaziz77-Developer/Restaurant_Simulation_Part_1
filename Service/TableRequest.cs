@@ -1,10 +1,11 @@
 ﻿using Restaurant_Simulation_Part_1.Interfaces;
 using Restaurant_Simulation_Part_1.Models;
+using System.Collections;
 using System.Security.Policy;
 
 namespace Restaurant_Simulation_Part_1.Service
 {
-    public class TableRequest
+    public class TableRequest : IEnumerable
     {
         private  Dictionary<string, List<IMenuItem>> menuItems = new Dictionary<string, List<IMenuItem>>();
         public void Add<T>(string name,string drinkName = "No Drink") where T : IMenuItem, new()
@@ -46,6 +47,18 @@ namespace Restaurant_Simulation_Part_1.Service
                 }
             }
             return listOrders;
+        }
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            foreach (var item in  menuItems.OrderBy(item => item.Key).ToList())
+            {
+                yield return item.Key;
+            }
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         public List<IMenuItem> this[string name]

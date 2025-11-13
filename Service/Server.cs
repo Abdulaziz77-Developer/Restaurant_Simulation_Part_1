@@ -4,70 +4,90 @@ namespace Restaurant_Simulation_Part_1.Service
 {
     public class Server
     {
+        private object locker = new object();
         public TableRequest table = new TableRequest();
         public Action<TableRequest>? ServerDelegate;
         public Cook cook = new Cook();
+        private SemaphoreSlim semaphore = new SemaphoreSlim(2);
+        private Cook cook2 = new Cook();
         List<string> result = new List<string>();
-        private List<string> names = new List<string>();
         public void NewRequest(string name, int countEgg, int countChicken, string drink = "No Drink")
         {
-            for (int i = 0; i < countEgg; i++)
+            lock (locker)
             {
-                table.Add<Egg>(name);
+                for (int i = 0; i < countEgg; i++)
+                {
+                    table.Add<Egg>(name);
+                }
+                for (int i = 0; i < countChicken; i++)
+                {
+                    table.Add<ChickenOrder>(name);
+                }
+                table.Add<Drink>(name, drink);
+                result = new();
             }
-            for (int i = 0; i < countChicken; i++)
-            {
-                table.Add<ChickenOrder>(name);
-            }
-            table.Add<Drink>(name,drink);
-            names.Add(name);
-            result = new();
         }
         public Server()
         {
-            ServerDelegate += cook.Process;
-            cook.CookDelegate += Serve;
+           
         }
         public void SendOrdersToCook()
         {
-           
-            ServerDelegate?.Invoke(table);
-           
+                try
+                {
+                            Task.Run(async () =>
+                            {  
+                                await semaphore.WaitAsync();
+                                cook.Process(table);
+                                semaphore.Release();
+                            }).ContinueWith(task => Serve()).Wait();
+                            Task.Run(async () =>
+                            {  await semaphore.WaitAsync();
+                                cook2.Process(table);
+                               semaphore.Release();
+                            }).ContinueWith(task => Serve()).Wait();
+                            
+                }
+                catch (Exception ex )
+                {
+                    throw new Exception(ex.Message);
+                }
+
         }
 
         public List<string> Serve()
         {
-            int counterChicken = 0;
-            int countEgg = 0;
-            string? drinkName ="";
-            foreach (var name in names)
+            lock (locker)
             {
-                var items = table[name];
-                foreach (var item in items)
+                int counterChicken = 0;
+                int countEgg = 0;
+                string? drinkName = "";
+                foreach (var name in table)
                 {
-                    if (item is Egg)
+                    var items = table[name];
+                    foreach (var item in items)
                     {
-                        countEgg++;
+                        if (item is Egg)
+                        {
+                            countEgg++;
+                        }
+                        else if (item is Drink)
+                        {
+                            drinkName = item.ToString();
+                        }
+                        else
+                        {
+                            counterChicken++;
+                        }
                     }
-                    else if(item is Drink)
-                    {
-                        drinkName = item.ToString();
-                    }
-                    else
-                    {
-                        counterChicken++;
-                    }
+                    result.Add($"{name} : CountEgg {countEgg} | CountChicken {counterChicken} Drink {drinkName}");
+                    countEgg = 0;
+                    counterChicken = 0;
+                    drinkName = string.Empty;
                 }
-                result.Add($"{name} : CountEgg {countEgg} | CountChicken {counterChicken} Drink {drinkName}");
-                countEgg = 0;
-                counterChicken = 0;
-                drinkName = string.Empty;
+                table = new TableRequest();
+                return result;
             }
-            table = new TableRequest();
-            names = new();
-            return result;
         }
-
-       
     }
 }

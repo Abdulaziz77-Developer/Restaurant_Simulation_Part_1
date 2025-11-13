@@ -10,7 +10,7 @@ namespace Restaurant_Simulation_Part_1
      
         private readonly string[] drinks = { "CocaCola", "Fanta", "Sprite", "Water" };
         public  Server server = new Server();
-
+        private object locker = new object();
         public Form1()
         {
             InitializeComponent();
@@ -25,21 +25,18 @@ namespace Restaurant_Simulation_Part_1
         private void btnNewRequest_Click(object sender, EventArgs e)
         {
             countEggQuality.Text = "0";
-            listOrders.Items.Clear();
+            //listOrders.Items.Clear();
             int amountEgg = int.Parse(countEgg.Text);
             int amountChicken = int.Parse(countChicken.Text);
-            string? drinkName = "";
+            string drinkName = drinksBox.SelectedItem?.ToString() ?? "No Drink"; 
             string name = userName.Text;
-            
-            if (drinksBox.SelectedItem == null)
+
+            if (string.IsNullOrEmpty(name))
             {
                 drinkName = "No Drink";
             }
-            else
-            {
-                drinkName = drinksBox.SelectedItem.ToString();
-            }
-            server.NewRequest(name,amountChicken, amountEgg, drinkName);
+
+            server.NewRequest(name, amountChicken, amountEgg, drinkName); 
             countEgg.Text = "0";
             countChicken.Text = "0";
             drinksBox.Items.Clear();
@@ -51,19 +48,25 @@ namespace Restaurant_Simulation_Part_1
 
         private void SendRequestForCook_Click(object sender, EventArgs e)
         {
-            server.SendOrdersToCook();
-        }
-        private void ServePrepareFood_Click(object sender, EventArgs e)
-        {
-            var results = server.Serve();
-            listOrders.Items.Clear();
-            listOrders.HorizontalScrollbar = true;
-            foreach (var result in results)
+            lock (locker)
             {
-                listOrders.Items.Add(result);
+                Task.Run(() => server.SendOrdersToCook()).
+                    ContinueWith(task => ShowResult());
             }
-            countEggQuality.Text = $"{Egg.GetQuality}";
         }
+        public void ShowResult()
+        {
+            var result = server.Serve();
+            lock (locker)
+                this.Invoke((Action)(() =>
+                {
+                    foreach (var item in result)
+                    {
+                        listOrders.Items.Add(item);
+                    }
+                }));
+        }
+      
         private void countChicken_Click(object sender, EventArgs e)
         {
             countChicken.Text = "";

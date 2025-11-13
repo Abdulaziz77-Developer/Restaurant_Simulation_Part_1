@@ -147,13 +147,6 @@
             // 
             // ServePrepareFood
             // 
-            ServePrepareFood.Location = new Point(84, 366);
-            ServePrepareFood.Name = "ServePrepareFood";
-            ServePrepareFood.Size = new Size(459, 38);
-            ServePrepareFood.TabIndex = 6;
-            ServePrepareFood.Text = "Serve prepare food to the Customer ";
-            ServePrepareFood.UseVisualStyleBackColor = true;
-            ServePrepareFood.Click += ServePrepareFood_Click;
             // 
             // label4
             // 
