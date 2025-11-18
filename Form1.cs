@@ -39,6 +39,7 @@ namespace Restaurant_Simulation_Part_1
             server.NewRequest(name, amountChicken, amountEgg, drinkName); 
             countEgg.Text = "0";
             countChicken.Text = "0";
+            userName.Text = "";
             drinksBox.Items.Clear();
             for (int i = 0; i < drinks.Length; i++)
             {
@@ -50,23 +51,24 @@ namespace Restaurant_Simulation_Part_1
         {
             lock (locker)
             {
-                Task.Run(() => server.SendOrdersToCook()).
+                Task.Run(() => server.SendOrdersToCookAsync()).
                     ContinueWith(task => ShowResult());
             }
         }
         public void ShowResult()
         {
+            
             var result = server.Serve();
             lock (locker)
                 this.Invoke((Action)(() =>
                 {
+                    listOrders.HorizontalScrollbar = true;
                     foreach (var item in result)
                     {
                         listOrders.Items.Add(item);
                     }
                 }));
         }
-      
         private void countChicken_Click(object sender, EventArgs e)
         {
             countChicken.Text = "";

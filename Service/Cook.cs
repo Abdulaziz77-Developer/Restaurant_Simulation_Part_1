@@ -1,35 +1,40 @@
-﻿using Restaurant_Simulation_Part_1.Interfaces;
-using Restaurant_Simulation_Part_1.Models;
-using System.Security.Cryptography;
-using static Restaurant_Simulation_Part_1.Service.TableRequest;
+﻿using Restaurant_Simulation_Part_1.Models;
+using System.Threading.Tasks;
 
 namespace Restaurant_Simulation_Part_1.Service
 {
     public class Cook
     {
-        public void Process(TableRequest table)
+        private static int _idCounter = 1;
+        public int Id { get; private set; }
+
+        public Cook()
         {
-            if (table == null)
+            Id = _idCounter++;
+        }
+
+        public async Task ProcessAsync(TableRequest table)
+        {
+            // Готовим курицу
+            foreach (var chicken in table.Get<ChickenOrder>())
             {
-                throw new ArgumentNullException("Table is not be null ");
+                chicken.CutUp();
+                chicken.Cook();
+                await Task.Delay(1000); // имитация времени приготовления
             }
-            var items = table.Get<ChickenOrder>();
-            foreach (var item in items)
-            {
-                item.CutUp();
-                item.Cook();
-                Thread.Sleep(2000);
-            }
-            var eggs = table.Get<Egg>();
-            foreach (var egg in eggs)
+
+            // Готовим яйца
+            foreach (var egg in table.Get<Egg>())
             {
                 using (egg)
                 {
                     egg.Crack();
                     egg.Cook();
                 }
-                Thread.Sleep(2000);
+                await Task.Delay(500);
             }
+
+            // Напитки не требуют обработки
         }
     }
 }

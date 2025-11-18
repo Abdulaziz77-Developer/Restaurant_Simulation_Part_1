@@ -30,6 +30,7 @@
         {
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             groupBox1 = new GroupBox();
+            userName = new TextBox();
             drinksBox = new ComboBox();
             countEgg = new TextBox();
             countChicken = new TextBox();
@@ -39,10 +40,8 @@
             SendRequestForCook = new Button();
             label2 = new Label();
             countEggQuality = new Label();
-            ServePrepareFood = new Button();
             label4 = new Label();
             listOrders = new ListBox();
-            userName = new TextBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -64,6 +63,13 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Mune";
             groupBox1.Enter += groupBox1_Enter;
+            // 
+            // userName
+            // 
+            userName.Location = new Point(372, 92);
+            userName.Name = "userName";
+            userName.Size = new Size(151, 38);
+            userName.TabIndex = 12;
             // 
             // drinksBox
             // 
@@ -145,9 +151,6 @@
             countEggQuality.TabIndex = 5;
             countEggQuality.Text = "0";
             // 
-            // ServePrepareFood
-            // 
-            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -166,13 +169,6 @@
             listOrders.Size = new Size(580, 159);
             listOrders.TabIndex = 8;
             // 
-            // userName
-            // 
-            userName.Location = new Point(372, 92);
-            userName.Name = "userName";
-            userName.Size = new Size(151, 38);
-            userName.TabIndex = 12;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(14F, 31F);
@@ -180,7 +176,6 @@
             ClientSize = new Size(659, 653);
             Controls.Add(listOrders);
             Controls.Add(label4);
-            Controls.Add(ServePrepareFood);
             Controls.Add(countEggQuality);
             Controls.Add(label2);
             Controls.Add(SendRequestForCook);
@@ -204,7 +199,6 @@
         private Button SendRequestForCook;
         private Label label2;
         private Label countEggQuality;
-        private Button ServePrepareFood;
         private Label label4;
         private ComboBox drinksBox;
         private TextBox countEgg;
